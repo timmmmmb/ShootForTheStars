@@ -3,6 +3,7 @@ package game.main;
 import game.Bullet.BaseBullet;
 import game.entitiy.EnemyBasic;
 import game.entitiy.Player;
+import game.menu.DeathScreen;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.util.Iterator;
 
@@ -103,10 +105,14 @@ public class LevelScene extends Scene {
                 }
             }
             if(player.isRemove()){
+                animationTimer.stop();
                 //gameover change scene to gameOverScene
+                DeathScreen.getInstance(stageWidth,stageHeight,gameStage).setScore(score);
+                gameStage.setScene(DeathScreen.getInstance(stageWidth,stageHeight,gameStage));
             }
         }
     };
+    private static Stage gameStage;
     private static final String menuStyle = "-fx-border-color: #000000; -fx-border-width: 5px;-fx-background-color:#000000;-fx-font-size: 24px;-fx-font-family:Segoe UI;fx-text-fill:#ffffff;";
     private static LevelScene instance;
 
@@ -127,8 +133,9 @@ public class LevelScene extends Scene {
     }
 
 
-    public static LevelScene getInstance(double width, double height){
+    public static LevelScene getInstance( double width, double height,Stage stage){
         if(instance==null){
+            gameStage = stage;
             stageWidth = width;
             stageHeight = height;instance = new LevelScene(createGUI(stageWidth, stageHeight), stageWidth, stageHeight);
             instance.setOnKeyPressed(event -> {
@@ -175,6 +182,7 @@ public class LevelScene extends Scene {
         timer = 0;
         difficulty = 1;
         createGUI(stageWidth,stageHeight);
+        animationTimer.start();
     }
 
     private static void spawn(){

@@ -53,7 +53,10 @@ public class StartMenu extends Scene {
                 e -> playButton.setGraphic(new ImageView(playImageOnHover)));
         playButton.addEventHandler(MouseEvent.MOUSE_EXITED,
                 e -> playButton.setGraphic(new ImageView(playImage)));
-        playButton.setOnAction(event -> gameStage.setScene(LevelScene.getInstance(width, height)));
+        playButton.setOnAction(event -> {
+            gameStage.setScene(LevelScene.getInstance(width, height, gameStage));
+            LevelScene.restartLevel();
+        });
         playButton.setStyle(menuStyle);
         optionsButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
                 e -> optionsButton.setGraphic(new ImageView(optionsImageOnHover)));
