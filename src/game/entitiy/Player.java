@@ -20,6 +20,18 @@ public class Player extends Entity {
         if(left)movex-=this.speed;
         if(right)movex+=this.speed;
         movePosition(movex,movey);
+        if(getCharacterModel().getX()<0){
+            getCharacterModel().setX(0);
+        }
+        if(getCharacterModel().getX()+getWidth()>=getScene().getWidth()){
+            getCharacterModel().setX(getScene().getWidth()-getWidth());
+        }
+        if(getCharacterModel().getY()<0){
+            getCharacterModel().setY(0);
+        }
+        if(getCharacterModel().getY()+getHeight()>=getScene().getHeight()){
+            getCharacterModel().setY(getScene().getHeight()-getHeight());
+        }
     }
 
     public void updatePlayer(){

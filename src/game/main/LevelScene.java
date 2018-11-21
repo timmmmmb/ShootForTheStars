@@ -65,7 +65,7 @@ public class LevelScene extends Scene {
                 {
                      EnemyBasic enemy = (EnemyBasic)enemyIterator.next();
                      //if an enemy is hit
-                     if(enemy.getCharacterModel().intersects(bullet.getLayoutBounds())&&!enemy.isDead()){
+                     if(enemy.getCharacterModel().intersects(bullet.getLayoutBounds())&&!enemy.isDead()&&!enemy.isInvincible()){
                          enemy.die();
                          increaseScore(enemy.getPoints());
                          bulletIterator.remove();
@@ -85,8 +85,8 @@ public class LevelScene extends Scene {
                 EnemyBasic enemy = (EnemyBasic)enemyIterator.next();
                 //if the player collides
                 if(player.getCharacterModel().intersects(enemy.getLayoutBounds())&&!player.isDead()&&!enemy.isDead()){
-                    player.die();
-                    enemy.die();
+                    if(!enemy.isInvincible())enemy.die();
+                    if(!player.isInvincible())player.die();
                     continue;
                 }
                 //if an enemy is exploded
@@ -104,7 +104,7 @@ public class LevelScene extends Scene {
             {
                 BaseBullet bullet = (BaseBullet)bulletIterator.next();
                 //if the player is hit
-                if(player.getCharacterModel().intersects(bullet.getLayoutBounds())&&!player.isDead()){
+                if(player.getCharacterModel().intersects(bullet.getLayoutBounds())&&!player.isDead()&&!player.isInvincible()){
                     player.die();
                     bulletIterator.remove();
                     continue;

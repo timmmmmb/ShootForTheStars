@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Entity extends Group {
     double speed = 5;
     ImageView characterModel = new ImageView();
+    boolean invincible = false;
     private int animationTimer = 0;
     private int maxSprites = 8;
     private boolean dead = false;
@@ -109,5 +110,9 @@ public class Entity extends Group {
 
     public ImageView getCharacterModel(){
         return characterModel;
+    }
+
+    public boolean isInvincible() {
+        return invincible;
     }
 }
