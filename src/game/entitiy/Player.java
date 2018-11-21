@@ -11,6 +11,9 @@ public class Player extends Entity {
     }
 
     private void movePlayer(){
+        if(isDead()){
+            return;
+        }
         double movex = 0,movey = 0;
         if(up)movey-=this.speed;
         if(down)movey+=this.speed;
@@ -20,15 +23,16 @@ public class Player extends Entity {
     }
 
     public void updatePlayer(){
-        if(shooting&&bulletTimer==bulletcd){
+        if(shooting&&bulletTimer==bulletcd&&!isDead()){
             shoot();
             bulletTimer = 0;
         }
-        if(bulletTimer!=bulletcd){
+        if(bulletTimer!=bulletcd&&!isDead()){
             bulletTimer++;
         }
         movePlayer();
         moveBullets();
+        animate();
     }
 
     public void setUp(boolean up) {

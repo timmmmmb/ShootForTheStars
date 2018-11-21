@@ -23,7 +23,7 @@ public class Entity extends Group {
     private final String  animationImageUrl;
     final double rotation;
     final double bulletspeed = 10;
-    final int bulletcd = 10;
+    final int bulletcd = 30;
     int bulletTimer;
     private Group bullets = new Group();
     public Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL){
