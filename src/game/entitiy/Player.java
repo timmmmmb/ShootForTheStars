@@ -7,7 +7,7 @@ public class Player extends Entity {
     private boolean right = false;
     private boolean shooting = false;
     public Player() {
-        super("Effects\\Blue Effects\\1_","Blue\\Animation\\" ,90, "Blue\\bullet.png");
+        super("Effects/Blue Effects/1_","Blue/Animation/" ,90, "Blue/bullet.png");
     }
 
     private void movePlayer(){
