@@ -3,6 +3,7 @@ package game.main;
 import game.Bullet.BaseBullet;
 import game.entitiy.EnemyBasic;
 import game.entitiy.Player;
+import game.entitiy.UpAndDownEnemy;
 import game.menu.DeathScreen;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
@@ -15,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.util.Iterator;
+import java.util.Random;
 
 public class LevelScene extends Scene {
 
@@ -41,8 +43,11 @@ public class LevelScene extends Scene {
                 increaseScore(1);
             }
 
-            if(timer%450 ==0){
+            if(timer%450 ==0&&timer%900!=0){
                 spawn();
+            }
+            if(timer%900 ==0){
+                spawnThreeUpAndDown();
             }
 
             player.updatePlayer();
@@ -64,10 +69,12 @@ public class LevelScene extends Scene {
                          enemy.die();
                          increaseScore(enemy.getPoints());
                          bulletIterator.remove();
+                         continue;
                      }
                      //if bullet out of screen
-                    if(!bullet.intersects(-100,-100,stageWidth+100,stageHeight+100)){
+                    if(!bullet.intersects(-100,-100,stageWidth+stageWidth,stageHeight+100)){
                         bulletIterator.remove();
+                        continue;
                     }
                 }
             }
@@ -80,13 +87,15 @@ public class LevelScene extends Scene {
                 if(player.getCharacterModel().intersects(enemy.getLayoutBounds())&&!player.isDead()&&!enemy.isDead()){
                     player.die();
                     enemy.die();
+                    continue;
                 }
                 //if an enemy is exploded
                 if(enemy.isRemove()){
                     enemyIterator.remove();
+                    continue;
                 }
                 //if enemy out of screen
-                if(!enemy.intersects(-100,-100,stageWidth+100,stageHeight+100)){
+                if(!enemy.intersects(-100,-100,stageWidth+stageWidth,stageHeight+100)){
                     enemyIterator.remove();
                 }
             }
@@ -98,10 +107,12 @@ public class LevelScene extends Scene {
                 if(player.getCharacterModel().intersects(bullet.getLayoutBounds())&&!player.isDead()){
                     player.die();
                     bulletIterator.remove();
+                    continue;
                 }
                 //if bullet out of screen
                 if(!bullet.intersects(-100,-100,stageWidth+100,stageHeight+100)){
                     bulletIterator.remove();
+                    continue;
                 }
             }
             if(player.isRemove()){
@@ -186,8 +197,33 @@ public class LevelScene extends Scene {
     }
 
     private static void spawn(){
-        EnemyBasic enemy = new EnemyBasic(bullets);
-        enemy.setPosition(stageWidth,(stageHeight-enemy.getHeight())/2);
+        //randomize the enemy and his startpos
+        Random rng = new Random();
+        int enemytype = rng.nextInt(2);
+        int y = rng.nextInt((int)stageHeight-100)+1;
+        if(enemytype==0){
+            UpAndDownEnemy enemy = new UpAndDownEnemy(bullets);
+            enemy.setPosition(stageWidth,y);
+            enemys.getChildren().add(enemy);
+        }
+        if(enemytype==1){
+            EnemyBasic enemy = new EnemyBasic(bullets);
+            enemy.setPosition(stageWidth,y);
+            enemys.getChildren().add(enemy);
+        }
+    }
+
+    private static void spawnThreeUpAndDown(){
+        UpAndDownEnemy enemy = new UpAndDownEnemy(bullets);
+        enemy.setPosition(stageWidth,1);
+        enemys.getChildren().add(enemy);
+
+        enemy = new UpAndDownEnemy(bullets);
+        enemy.setPosition(stageWidth+enemy.getWidth(),200);
+        enemys.getChildren().add(enemy);
+
+        enemy = new UpAndDownEnemy(bullets);
+        enemy.setPosition(stageWidth+enemy.getWidth()*2,400);
         enemys.getChildren().add(enemy);
     }
 }

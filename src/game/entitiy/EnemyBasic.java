@@ -8,7 +8,7 @@ public class EnemyBasic extends Entity {
 
     private int points = 10;
     private Group bulletsScene;
-    private int shootercdmax = 60;
+    int shootercdmax = 60;
     private int shootercd = 0;
 
     public EnemyBasic(Group bullets) {
