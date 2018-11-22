@@ -63,6 +63,7 @@ public class Entity extends Group {
         this.getChildren().add(characterModel);
         this.getChildren().add(shieldView);
         this.getChildren().add(bullets);
+        shieldView.setVisible(false);
     }
 
     void animate(){

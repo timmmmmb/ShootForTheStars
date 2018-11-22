@@ -37,6 +37,7 @@ public class LevelScene extends Scene {
                 timer = 0;
                 difficulty++;
                 spawnMeteor();
+                player.getShield();
             }
             timer++;
             if(timer%30 ==0&&!player.isDead()){
@@ -226,6 +227,7 @@ public class LevelScene extends Scene {
         root.getChildren().addAll(backgroundImageView,scoreLabel,player,enemys,bullets,meteors);
         player.setPosition(0,(stageHeight-player.getHeight())/2);
         spawn();
+        spawnMeteor();
         return root;
     }
 
