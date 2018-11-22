@@ -1,7 +1,6 @@
 package game.menu;
 
 import game.main.LevelScene;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,12 +18,7 @@ public class StartMenu extends Scene {
         super(root, width, height);
     }
 
-    /**
-     * Use this function to get the Instance of the menu
-     * @param width
-     * @param height
-     * @return the new StartMenu
-     */
+
     public static StartMenu getInstance(double width, double height, Stage gameStage){
         if(instance==null){
             instance = new StartMenu(createGUI(width, height, gameStage), width, height);

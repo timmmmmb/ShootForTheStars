@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Credits extends Scene {
+class Credits extends Scene {
 
     private static final String menuStyle = "-fx-border-color: #000000; -fx-border-width: 5px;-fx-background-color:#000000;-fx-font-size: 24px;-fx-font-family:Segoe UI;fx-text-fill:#ffffff;";
     private static Credits instance;
@@ -20,7 +20,7 @@ public class Credits extends Scene {
     }
 
 
-    public static Credits getInstance(double width, double height, Stage gameStage){
+    static Credits getInstance(double width, double height, Stage gameStage){
         if(instance==null){
             instance = new Credits(createGUI(width, height, gameStage), width, height);
         }

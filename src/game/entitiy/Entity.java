@@ -11,15 +11,13 @@ import java.util.ArrayList;
 public class Entity extends Group {
     double speed = 5;
     ImageView characterModel = new ImageView();
-    boolean invincible = false;
+    private boolean invincible = false;
     private int animationTimer = 0;
-    private int maxSprites = 8;
     private boolean dead = false;
     private boolean remove = false;
-    private ArrayList<Image> animationImages = new ArrayList<Image>();
-    private ArrayList<Image> deathAnimationImages = new ArrayList<Image>();
+    private ArrayList<Image> animationImages = new ArrayList<>();
+    private ArrayList<Image> deathAnimationImages = new ArrayList<>();
     final Image bulletImage;
-    private int maxDeathAnimations = 16;
     private final String  deathImageURL;
     private final String  animationImageUrl;
     final double rotation;
@@ -27,7 +25,7 @@ public class Entity extends Group {
     final int bulletcd = 30;
     int bulletTimer;
     private Group bullets = new Group();
-    public Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL){
+    Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL){
         this.bulletImage = new Image(bulletURL,50,50,true,false);
         this.rotation = rotation;
         this.deathImageURL = deathImageURL;
@@ -36,10 +34,12 @@ public class Entity extends Group {
     }
 
     private void loadImages(){
-        for(int i = 1; i<=maxSprites;i++){
+        int maxSprites = 8;
+        for(int i = 1; i<= maxSprites; i++){
             animationImages.add(new Image(animationImageUrl+i+".png",100,100,true,false));
         }
-        for(int i = 0; i<=maxDeathAnimations;i++){
+        int maxDeathAnimations = 16;
+        for(int i = 0; i<= maxDeathAnimations; i++){
             deathAnimationImages.add(new Image(deathImageURL+i+".png",100,100,true,false));
         }
         characterModel = new ImageView(animationImages.get(0));
@@ -48,7 +48,7 @@ public class Entity extends Group {
         this.getChildren().add(bullets);
     }
 
-    public void animate(){
+    void animate(){
         if(animationTimer==deathAnimationImages.size()-1&&dead){
             remove = true;
         }else if(animationTimer==animationImages.size()-1&&!dead){
@@ -89,7 +89,7 @@ public class Entity extends Group {
         return characterModel.getImage().getWidth();
     }
 
-    public void movePosition(double x, double y){
+    void movePosition(double x, double y){
         setPosition(characterModel.getX()+x,characterModel.getY()+y);
     }
 

@@ -64,9 +64,11 @@ public class LevelScene extends Scene {
                 for (Object o : enemys.getChildren()) {
                     EnemyBasic enemy = (EnemyBasic) o;
                     //if an enemy is hit
-                    if (enemy.getCharacterModel().intersects(bullet.getLayoutBounds()) && !enemy.isDead() && !enemy.isInvincible()) {
-                        enemy.die();
-                        increaseScore(enemy.getPoints());
+                    if (enemy.getCharacterModel().intersects(bullet.getLayoutBounds()) && !enemy.isDead()) {
+                        if(!enemy.isInvincible()){
+                            enemy.die();
+                            increaseScore(enemy.getPoints());
+                        }
                         bulletIterator.remove();
                         continue;
                     }
@@ -79,11 +81,13 @@ public class LevelScene extends Scene {
             Iterator enemyIterator = enemys.getChildren().iterator();
             while (enemyIterator.hasNext())
             {
-
                 EnemyBasic enemy = (EnemyBasic)enemyIterator.next();
                 //if the player collides
                 if(player.getCharacterModel().intersects(enemy.getLayoutBounds())&&!player.isDead()&&!enemy.isDead()){
-                    if(!enemy.isInvincible())enemy.die();
+                    if(!enemy.isInvincible()){
+                        enemy.die();
+                        increaseScore(enemy.getPoints());
+                    }
                     if(!player.isInvincible())player.die();
                     continue;
                 }
@@ -102,8 +106,8 @@ public class LevelScene extends Scene {
             {
                 BaseBullet bullet = (BaseBullet)bulletIterator.next();
                 //if the player is hit
-                if(player.getCharacterModel().intersects(bullet.getLayoutBounds())&&!player.isDead()&&!player.isInvincible()){
-                    player.die();
+                if(player.getCharacterModel().intersects(bullet.getLayoutBounds())&&!player.isDead()){
+                    if(!player.isInvincible())player.die();
                     bulletIterator.remove();
                     continue;
                 }

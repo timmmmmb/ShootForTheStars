@@ -3,7 +3,7 @@ package game.entitiy;
 import javafx.scene.Group;
 
 public class UpAndDownEnemy extends EnemyBasic{
-    boolean moveup = false;
+    private boolean moveup = false;
     public UpAndDownEnemy(Group bullets) {
         super(bullets);
         shootercdmax = 120;

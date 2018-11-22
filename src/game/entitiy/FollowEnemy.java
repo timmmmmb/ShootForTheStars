@@ -3,7 +3,7 @@ package game.entitiy;
 import javafx.scene.Group;
 
 public class FollowEnemy extends EnemyBasic {
-    Player target;
+    private Player target;
     public FollowEnemy(Group bullets, Player target) {
         super(bullets);
         this.target = target;

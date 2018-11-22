@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Options extends Scene {
+class Options extends Scene {
 
     private static final String menuStyle = "-fx-border-color: #000000; -fx-border-width: 5px;-fx-background-color:#000000;";
     private static Options instance;
@@ -18,7 +18,7 @@ public class Options extends Scene {
         super(root, width, height);
     }
 
-    public static Options getInstance(double width, double height, Stage gameStage){
+    static Options getInstance(double width, double height, Stage gameStage){
         if(instance==null){
             instance = new Options(createGUI(width, height, gameStage), width, height);
         }

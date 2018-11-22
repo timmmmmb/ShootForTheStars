@@ -10,7 +10,7 @@ public class Game extends Application {
     }
 
     @Override
-    public void start(Stage gameStage) throws Exception {
+    public void start(Stage gameStage) {
         gameStage.setScene(StartMenu.getInstance(1080,720, gameStage));
         gameStage.show();
     }

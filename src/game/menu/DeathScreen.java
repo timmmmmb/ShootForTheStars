@@ -19,11 +19,11 @@ public class DeathScreen extends Scene {
 
     private static int score = 0;
     private static int highscore = 0;
-    static  Label diedLabel = new Label("You died");
-    static Label scoreLabel = new Label("your Score: "+score);
-    static Label highscoreLabel = new Label("your Highscore: "+highscore);
+    private static  Label diedLabel = new Label("You died");
+    private static Label scoreLabel = new Label("your Score: "+score);
+    private static Label highscoreLabel = new Label("your Highscore: "+highscore);
     private static final String menuStyle = "-fx-border-color: #000000; -fx-border-width: 5px;-fx-background-color:#000000;-fx-font-size: 24px;-fx-font-family:Segoe UI;fx-text-fill:#ffffff;";
-    public DeathScreen(Parent root, double width, double height) {
+    private DeathScreen(Parent root, double width, double height) {
         super(root, width, height);
     }
 
@@ -69,7 +69,7 @@ public class DeathScreen extends Scene {
     }
 
     public void setScore(int score){
-        this.score = score;
+        DeathScreen.score = score;
         if(score > highscore){
             highscore = score;
         }
