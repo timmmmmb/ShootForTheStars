@@ -10,8 +10,8 @@ public class TargetEnemy extends EnemyBasic{
         super(bullets);
         Random rng = new Random();
         setPosition(x,y);
-        double targetX = rng.nextDouble() * 720;
-        double targetY = 0;
+        double targetX = 0;
+        double targetY = rng.nextDouble() * 720;
         double hypothenuse = Math.sqrt((characterModel.getX()- targetX)*(characterModel.getX()- targetX)+(characterModel.getY()- targetY)*(characterModel.getY()- targetY));
         double steps = hypothenuse / speed;
         xSpeed = (characterModel.getX()- targetX)/steps;

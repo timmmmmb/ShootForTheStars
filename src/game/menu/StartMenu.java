@@ -9,10 +9,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class StartMenu extends Scene {
     private static StartMenu instance;
+    private static MediaPlayer mediaPlayer;
     private static final String menuStyle = "-fx-border-color: #000000; -fx-border-width: 5px;-fx-background-color:#000000;";
     private StartMenu(Parent root, double width, double height) {
         super(root, width, height);
@@ -21,6 +26,13 @@ public class StartMenu extends Scene {
 
     public static StartMenu getInstance(double width, double height, Stage gameStage){
         if(instance==null){
+            //start the music
+            String musicFile = "resources/Sounds/Music/Music.mp3";
+
+            Media sound = new Media(new File(musicFile).toURI().toString());
+            mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.setAutoPlay(true);
+            mediaPlayer.play();
             instance = new StartMenu(createGUI(width, height, gameStage), width, height);
         }
         return instance;
@@ -73,5 +85,9 @@ public class StartMenu extends Scene {
         root.setStyle(menuStyle);
         root.getChildren().addAll(titleImageView,playButton,optionsButton,creditsButton,exitButton);
         return root;
+    }
+
+    public void setVolume(double volume){
+        mediaPlayer.setVolume(volume);
     }
 }
