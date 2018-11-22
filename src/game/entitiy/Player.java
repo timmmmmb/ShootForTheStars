@@ -33,6 +33,8 @@ public class Player extends Entity {
         if(getCharacterModel().getY()+getHeight()>=getScene().getHeight()){
             getCharacterModel().setY(getScene().getHeight()-getHeight());
         }
+        shieldView.setX(getCharacterModel().getX());
+        shieldView.setY(getCharacterModel().getY());
     }
 
     public void updatePlayer(){

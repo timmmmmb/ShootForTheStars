@@ -44,13 +44,27 @@ public class LevelScene extends Scene {
                 increaseScore(1);
             }
 
+            if(timer%250 ==0&&difficulty>=3){
+                spawn();
+            }
+
             if(timer%350 ==0&&difficulty>=2){
                 spawn();
             }
+            //spawn one enemy all 15s
             if(timer%450 ==0&&timer%900!=0){
                 spawn();
             }
+
+            if(timer%400 ==0){
+                spawnMeteor();
+            }
+
             if(timer%900 ==0){
+                spawnThreeUpAndDown();
+            }
+
+            if(timer%1100 ==0&&difficulty>=4){
                 spawnThreeUpAndDown();
             }
 
@@ -114,6 +128,14 @@ public class LevelScene extends Scene {
                 if (!enemy.intersects(-100, -100, stageWidth + stageWidth, stageHeight + 100)) {
                     enemyIterator.remove();
                 }
+
+                for(Object o:meteors.getChildren()){
+                    if(((Meteor)o).intersects(enemy.getLayoutBounds())&& !enemy.isDead()){
+                        if (!enemy.isInvincible()) {
+                            enemy.hit();
+                        }
+                    }
+                }
             }
 
             Iterator meteorIterator = meteors.getChildren().iterator();
@@ -124,12 +146,12 @@ public class LevelScene extends Scene {
                     if (!player.isInvincible()) player.hit();
                     continue;
                 }
-                //if an enemy is exploded
+                //if a meteor is exploded
                 if (meteor.isRemove()) {
                     meteorIterator.remove();
                     continue;
                 }
-                //if enemy out of screen
+                //if meteor out of screen
                 if (!meteor.intersects(-100, -100, stageWidth + stageWidth, stageHeight + 100)) {
                     meteorIterator.remove();
                 }
