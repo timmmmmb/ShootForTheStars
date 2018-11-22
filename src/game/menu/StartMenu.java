@@ -27,12 +27,12 @@ public class StartMenu extends Scene {
     public static StartMenu getInstance(double width, double height, Stage gameStage){
         if(instance==null){
             //start the music
-            String musicFile = "resources/Sounds/Music/Music.mp3";
+            /*String musicFile = "Sounds/Music/Music.mp3";
 
-            Media sound = new Media(new File(musicFile).toURI().toString());
+            Media sound = new Media(new File(musicFile).toString());
             mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.setAutoPlay(true);
-            mediaPlayer.play();
+            mediaPlayer.play();*/
             instance = new StartMenu(createGUI(width, height, gameStage), width, height);
         }
         return instance;

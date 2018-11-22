@@ -71,7 +71,7 @@ public class LevelScene extends Scene {
                     //if an enemy is hit
                     if (enemy.getCharacterModel().intersects(bullet.getLayoutBounds()) && !enemy.isDead()) {
                         if(!enemy.isInvincible()){
-                            enemy.die();
+                            enemy.hit();
                             increaseScore(enemy.getPoints());
                         }
                         bulletIterator.remove();
@@ -98,10 +98,10 @@ public class LevelScene extends Scene {
                 //if the player collides
                 if (player.getCharacterModel().intersects(enemy.getLayoutBounds()) && !player.isDead() && !enemy.isDead()) {
                     if (!enemy.isInvincible()) {
-                        enemy.die();
+                        enemy.hit();
                         increaseScore(enemy.getPoints());
                     }
-                    if (!player.isInvincible()) player.die();
+                    if (!player.isInvincible()) player.hit();
                     continue;
                 }
                 //if an enemy is exploded
@@ -120,7 +120,7 @@ public class LevelScene extends Scene {
                 Meteor meteor = (Meteor) meteorIterator.next();
                 //if the player collides
                 if (player.getCharacterModel().intersects(meteor.getLayoutBounds()) && !player.isDead()) {
-                    if (!player.isInvincible()) player.die();
+                    if (!player.isInvincible()) player.hit();
                     continue;
                 }
                 //if an enemy is exploded
@@ -140,7 +140,7 @@ public class LevelScene extends Scene {
                 BaseBullet bullet = (BaseBullet)bulletIterator.next();
                 //if the player is hit
                 if(player.getCharacterModel().intersects(bullet.getLayoutBounds())&&!player.isDead()){
-                    if(!player.isInvincible())player.die();
+                    if(!player.isInvincible())player.hit();
                     bulletIterator.remove();
                     continue;
                 }

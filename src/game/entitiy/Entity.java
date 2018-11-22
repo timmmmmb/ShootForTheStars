@@ -11,14 +11,18 @@ import java.util.ArrayList;
 public class Entity extends Group {
     double speed = 5;
     ImageView characterModel = new ImageView();
+    private boolean shield = false;
     int maxSprites = 8;
     private boolean invincible = false;
     private int animationTimer = 0;
     private boolean dead = false;
     private boolean remove = false;
+
     private ArrayList<Image> animationImages = new ArrayList<>();
     private ArrayList<Image> deathAnimationImages = new ArrayList<>();
     final Image bulletImage;
+    final Image shieldImage;
+    ImageView shieldView;
     private final String  deathImageURL;
     private final String  animationImageUrl;
     final double rotation;
@@ -26,17 +30,19 @@ public class Entity extends Group {
     final int bulletcd = 30;
     int bulletTimer;
     private Group bullets = new Group();
-    Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL){
+    Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL, String shieldURL){
         this.bulletImage = new Image(bulletURL,50,50,true,false);
+        this.shieldImage = new Image(shieldURL,100,100,true,false);
         this.rotation = rotation;
         this.deathImageURL = deathImageURL;
         this.animationImageUrl = animationImageUrl;
         loadImages();
     }
 
-    Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL, int maxSprites){
+    Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL, String shieldURL, int maxSprites){
         this.maxSprites = maxSprites;
         this.bulletImage = new Image(bulletURL,50,50,true,false);
+        this.shieldImage = new Image(shieldURL,100,100,true,false);
         this.rotation = rotation;
         this.deathImageURL = deathImageURL;
         this.animationImageUrl = animationImageUrl;
@@ -44,6 +50,7 @@ public class Entity extends Group {
     }
 
     private void loadImages(){
+        shieldView = new ImageView(shieldImage);
         for(int i = 1; i<= maxSprites; i++){
             animationImages.add(new Image(animationImageUrl+i+".png",100,100,true,false));
         }
@@ -54,6 +61,7 @@ public class Entity extends Group {
         characterModel = new ImageView(animationImages.get(0));
         characterModel.setRotate(rotation);
         this.getChildren().add(characterModel);
+        this.getChildren().add(shieldView);
         this.getChildren().add(bullets);
     }
 
@@ -70,15 +78,24 @@ public class Entity extends Group {
         }else{
             characterModel.setImage(deathAnimationImages.get(animationTimer));
         }
+        if(shield){
+            shieldView.setVisible(true);
+        }else{
+            shieldView.setVisible(false);
+        }
     }
 
     public boolean isRemove() {
         return remove;
     }
 
-    public void die() {
-        dead = true;
-        animationTimer = 0;
+    public void hit() {
+        if(shield){
+            shield =false;
+        }else{
+            dead = true;
+            animationTimer = 0;
+        }
     }
 
     public boolean isDead() {
@@ -88,6 +105,8 @@ public class Entity extends Group {
     public void setPosition(double x, double y){
         characterModel.setX(x);
         characterModel.setY(y);
+        shieldView.setX(x);
+        shieldView.setY(y);
     }
 
     public double getHeight(){
@@ -124,4 +143,13 @@ public class Entity extends Group {
     public boolean isInvincible() {
         return invincible;
     }
+
+    public boolean isShield() {
+        return shield;
+    }
+
+    public void getShield() {
+        shield = true;
+    }
+
 }

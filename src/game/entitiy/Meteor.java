@@ -2,7 +2,7 @@ package game.entitiy;
 
 public class Meteor extends Entity {
     public Meteor(double x, double y, String animationImageUrl) {
-        super("Effects/Red Explosion/1_",animationImageUrl ,270,"Red/bullet_red.png",1);
+        super("Effects/Red Explosion/1_",animationImageUrl ,270,"Red/bullet_red.png","Red/Enemy_animation/shield.png",1);
         setPosition(x,y);
         speed = 1;
     }

@@ -12,7 +12,7 @@ public class EnemyBasic extends Entity {
     private int shootercd = 0;
 
     public EnemyBasic(Group bullets) {
-        super("Effects/Red Explosion/1_","Red/Enemy_animation/" ,270,"Red/bullet_red.png");
+        super("Effects/Red Explosion/1_","Red/Enemy_animation/" ,270,"Red/bullet_red.png","Red/Enemy_animation/shield.png");
         bulletsScene = bullets;
         speed = 2;
     }
