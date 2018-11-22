@@ -19,6 +19,7 @@ import java.util.Random;
 public class LevelScene extends Scene {
 
     private static Group root = new Group();
+    private static Group meteors = new Group();
     private static Group enemys = new Group();
     private static Group bullets = new Group();
     private static Player player = new Player();
@@ -35,6 +36,7 @@ public class LevelScene extends Scene {
             if(timer == resetTimer){
                 timer = 0;
                 difficulty++;
+                spawnMeteor();
             }
             timer++;
             if(timer%30 ==0&&!player.isDead()){
@@ -55,10 +57,13 @@ public class LevelScene extends Scene {
             for(Node enemy:enemys.getChildren()){
                 ((EnemyBasic)enemy).update();
             }
+            for(Node meteor:meteors.getChildren()){
+                ((Meteor)meteor).update();
+            }
             moveBullets();
             //check the position of all the bullets
             Iterator bulletIterator = player.getBullets().getChildren().iterator();
-            while (bulletIterator.hasNext())
+            loop:while (bulletIterator.hasNext())
             {
                 BaseBullet bullet = (BaseBullet)bulletIterator.next();
                 for (Object o : enemys.getChildren()) {
@@ -70,39 +75,67 @@ public class LevelScene extends Scene {
                             increaseScore(enemy.getPoints());
                         }
                         bulletIterator.remove();
-                        continue;
+                        continue loop;
                     }
-                    //if bullet out of screen
-                    if (!bullet.intersects(-100, -100, stageWidth + stageWidth, stageHeight + 100)) {
+                }
+                for (Object o : meteors.getChildren()) {
+                    Meteor meteor = (Meteor) o;
+                    //if a meteor is hit remove the bullet
+                    if (meteor.getCharacterModel().intersects(bullet.getLayoutBounds())) {
                         bulletIterator.remove();
+                        continue loop;
                     }
+                }
+
+                //if bullet out of screen
+                if (!bullet.intersects(-100, -100, stageWidth + stageWidth, stageHeight + 100)) {
+                    bulletIterator.remove();
                 }
             }
             Iterator enemyIterator = enemys.getChildren().iterator();
-            while (enemyIterator.hasNext())
-            {
-                EnemyBasic enemy = (EnemyBasic)enemyIterator.next();
+            while (enemyIterator.hasNext()) {
+                EnemyBasic enemy = (EnemyBasic) enemyIterator.next();
                 //if the player collides
-                if(player.getCharacterModel().intersects(enemy.getLayoutBounds())&&!player.isDead()&&!enemy.isDead()){
-                    if(!enemy.isInvincible()){
+                if (player.getCharacterModel().intersects(enemy.getLayoutBounds()) && !player.isDead() && !enemy.isDead()) {
+                    if (!enemy.isInvincible()) {
                         enemy.die();
                         increaseScore(enemy.getPoints());
                     }
-                    if(!player.isInvincible())player.die();
+                    if (!player.isInvincible()) player.die();
                     continue;
                 }
                 //if an enemy is exploded
-                if(enemy.isRemove()){
+                if (enemy.isRemove()) {
                     enemyIterator.remove();
                     continue;
                 }
                 //if enemy out of screen
-                if(!enemy.intersects(-100,-100,stageWidth+stageWidth,stageHeight+100)){
+                if (!enemy.intersects(-100, -100, stageWidth + stageWidth, stageHeight + 100)) {
                     enemyIterator.remove();
                 }
             }
+
+            Iterator meteorIterator = meteors.getChildren().iterator();
+            while (meteorIterator.hasNext()) {
+                Meteor meteor = (Meteor) meteorIterator.next();
+                //if the player collides
+                if (player.getCharacterModel().intersects(meteor.getLayoutBounds()) && !player.isDead()) {
+                    if (!player.isInvincible()) player.die();
+                    continue;
+                }
+                //if an enemy is exploded
+                if (meteor.isRemove()) {
+                    meteorIterator.remove();
+                    continue;
+                }
+                //if enemy out of screen
+                if (!meteor.intersects(-100, -100, stageWidth + stageWidth, stageHeight + 100)) {
+                    meteorIterator.remove();
+                }
+            }
+
             bulletIterator = bullets.getChildren().iterator();
-            while (bulletIterator.hasNext())
+            loop:while (bulletIterator.hasNext())
             {
                 BaseBullet bullet = (BaseBullet)bulletIterator.next();
                 //if the player is hit
@@ -114,8 +147,19 @@ public class LevelScene extends Scene {
                 //if bullet out of screen
                 if(!bullet.intersects(-100,-100,stageWidth+100,stageHeight+100)){
                     bulletIterator.remove();
+                    continue;
+                }
+                for (Object o : meteors.getChildren()) {
+                    Meteor meteor = (Meteor) o;
+                    //if a meteor is hit remove the bullet
+                    if (meteor.getCharacterModel().intersects(bullet.getLayoutBounds())) {
+                        bulletIterator.remove();
+                        continue loop;
+                    }
                 }
             }
+
+
             if(player.isRemove()){
                 animationTimer.stop();
                 //gameover change scene to gameOverScene
@@ -179,7 +223,7 @@ public class LevelScene extends Scene {
         Image backgroundImage = new Image("Background/background.jpg",width,width,true,false);
         ImageView backgroundImageView = new ImageView(backgroundImage);
         root.setStyle(menuStyle);
-        root.getChildren().addAll(backgroundImageView,player,enemys, scoreLabel,bullets);
+        root.getChildren().addAll(backgroundImageView,scoreLabel,player,enemys,bullets,meteors);
         player.setPosition(0,(stageHeight-player.getHeight())/2);
         spawn();
         return root;
@@ -189,6 +233,7 @@ public class LevelScene extends Scene {
         enemys = new Group();
         bullets = new Group();
         player = new Player();
+        meteors = new Group();
         score = 0;
         scoreLabel = new Label("Score: "+score);
         timer = 0;
@@ -236,5 +281,17 @@ public class LevelScene extends Scene {
         enemy = new UpAndDownEnemy(bullets);
         enemy.setPosition(stageWidth+enemy.getWidth()*2,400);
         enemys.getChildren().add(enemy);
+    }
+
+    private static void spawnMeteor(){
+        Random rng = new Random();
+        int enemytype = rng.nextInt(4);
+        int y = rng.nextInt((int)stageHeight-100)+1;
+        String imageURL = "Aestroids/aestroid_brown.png";
+        if(enemytype==0)imageURL = "Aestroids/aestroid_brown";
+        if(enemytype==1)imageURL = "Aestroids/aestroid_dark";
+        if(enemytype==2)imageURL = "Aestroids/aestroid_gay_2";
+        if(enemytype==3)imageURL = "Aestroids/aestroid_gray";
+        meteors.getChildren().add(new Meteor(stageWidth,y,imageURL));
     }
 }

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Entity extends Group {
     double speed = 5;
     ImageView characterModel = new ImageView();
+    int maxSprites = 8;
     private boolean invincible = false;
     private int animationTimer = 0;
     private boolean dead = false;
@@ -33,8 +34,16 @@ public class Entity extends Group {
         loadImages();
     }
 
+    Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL, int maxSprites){
+        this.maxSprites = maxSprites;
+        this.bulletImage = new Image(bulletURL,50,50,true,false);
+        this.rotation = rotation;
+        this.deathImageURL = deathImageURL;
+        this.animationImageUrl = animationImageUrl;
+        loadImages();
+    }
+
     private void loadImages(){
-        int maxSprites = 8;
         for(int i = 1; i<= maxSprites; i++){
             animationImages.add(new Image(animationImageUrl+i+".png",100,100,true,false));
         }
