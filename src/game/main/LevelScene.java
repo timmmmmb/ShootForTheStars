@@ -1,9 +1,7 @@
 package game.main;
 
 import game.Bullet.BaseBullet;
-import game.entitiy.EnemyBasic;
-import game.entitiy.Player;
-import game.entitiy.UpAndDownEnemy;
+import game.entitiy.*;
 import game.menu.DeathScreen;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
@@ -25,7 +23,7 @@ public class LevelScene extends Scene {
     private static Group bullets = new Group();
     private static Player player = new Player();
     private static int timer = 0;
-    private static final int  resetTimer = 3600;
+    private static final int  resetTimer = 1800;
     private static int difficulty = 1;
     private static int score = 0;
     private static Label scoreLabel = new Label("Score: "+score);
@@ -43,6 +41,9 @@ public class LevelScene extends Scene {
                 increaseScore(1);
             }
 
+            if(timer%350 ==0&&difficulty>=2){
+                spawn();
+            }
             if(timer%450 ==0&&timer%900!=0){
                 spawn();
             }
@@ -60,21 +61,18 @@ public class LevelScene extends Scene {
             while (bulletIterator.hasNext())
             {
                 BaseBullet bullet = (BaseBullet)bulletIterator.next();
-                Iterator enemyIterator = enemys.getChildren().iterator();
-                while (enemyIterator.hasNext())
-                {
-                     EnemyBasic enemy = (EnemyBasic)enemyIterator.next();
-                     //if an enemy is hit
-                     if(enemy.getCharacterModel().intersects(bullet.getLayoutBounds())&&!enemy.isDead()&&!enemy.isInvincible()){
-                         enemy.die();
-                         increaseScore(enemy.getPoints());
-                         bulletIterator.remove();
-                         continue;
-                     }
-                     //if bullet out of screen
-                    if(!bullet.intersects(-100,-100,stageWidth+stageWidth,stageHeight+100)){
+                for (Object o : enemys.getChildren()) {
+                    EnemyBasic enemy = (EnemyBasic) o;
+                    //if an enemy is hit
+                    if (enemy.getCharacterModel().intersects(bullet.getLayoutBounds()) && !enemy.isDead() && !enemy.isInvincible()) {
+                        enemy.die();
+                        increaseScore(enemy.getPoints());
                         bulletIterator.remove();
                         continue;
+                    }
+                    //if bullet out of screen
+                    if (!bullet.intersects(-100, -100, stageWidth + stageWidth, stageHeight + 100)) {
+                        bulletIterator.remove();
                     }
                 }
             }
@@ -112,7 +110,6 @@ public class LevelScene extends Scene {
                 //if bullet out of screen
                 if(!bullet.intersects(-100,-100,stageWidth+100,stageHeight+100)){
                     bulletIterator.remove();
-                    continue;
                 }
             }
             if(player.isRemove()){
@@ -139,7 +136,7 @@ public class LevelScene extends Scene {
         scoreLabel.setText("Score: "+score);
     }
 
-    public LevelScene(Parent root, double width, double height) {
+    private LevelScene(Parent root, double width, double height) {
         super(root, width, height);
     }
 
@@ -175,7 +172,7 @@ public class LevelScene extends Scene {
     }
 
     private static Group createGUI(double width, double height) {
-        Image backgroundImage = new Image("Background/background.jpg",width,width,true,false);
+        Image backgroundImage = new Image("Background/background.jpg",width,height,true,false);
         ImageView backgroundImageView = new ImageView(backgroundImage);
         root.setStyle(menuStyle);
         root.getChildren().addAll(backgroundImageView,player,enemys, scoreLabel,bullets);
@@ -199,8 +196,9 @@ public class LevelScene extends Scene {
     private static void spawn(){
         //randomize the enemy and his startpos
         Random rng = new Random();
-        int enemytype = rng.nextInt(2);
+        int enemytype = rng.nextInt(4);
         int y = rng.nextInt((int)stageHeight-100)+1;
+        //enemytype = 3;
         if(enemytype==0){
             UpAndDownEnemy enemy = new UpAndDownEnemy(bullets);
             enemy.setPosition(stageWidth,y);
@@ -208,6 +206,15 @@ public class LevelScene extends Scene {
         }
         if(enemytype==1){
             EnemyBasic enemy = new EnemyBasic(bullets);
+            enemy.setPosition(stageWidth,y);
+            enemys.getChildren().add(enemy);
+        }
+        if(enemytype==2){
+            TargetEnemy enemy = new TargetEnemy(bullets,stageWidth,y);
+            enemys.getChildren().add(enemy);
+        }
+        if(enemytype==3){
+            FollowEnemy enemy = new FollowEnemy(bullets, player);
             enemy.setPosition(stageWidth,y);
             enemys.getChildren().add(enemy);
         }
