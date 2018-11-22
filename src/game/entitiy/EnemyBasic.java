@@ -1,6 +1,6 @@
 package game.entitiy;
 
-import game.Bullet.BaseBullet;
+import game.bullet.BaseBullet;
 import javafx.scene.Group;
 
 

@@ -1,6 +1,6 @@
 package game.main;
 
-import game.Bullet.BaseBullet;
+import game.bullet.BaseBullet;
 import game.entitiy.*;
 import game.menu.DeathScreen;
 import javafx.animation.AnimationTimer;

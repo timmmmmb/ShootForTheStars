@@ -1,4 +1,4 @@
-package game.Bullet;
+package game.bullet;
 
 
 import javafx.scene.image.Image;
