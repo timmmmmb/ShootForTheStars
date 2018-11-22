@@ -28,24 +28,27 @@ public class Entity extends Group {
     final double rotation;
     final double bulletspeed = 10;
     final int bulletcd = 30;
+    final String deathAnimationBulletURL;
     int bulletTimer;
     private Group bullets = new Group();
-    Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL, String shieldURL){
+    Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL, String shieldURL, String deathAnimationBulletURL){
         this.bulletImage = new Image(bulletURL,50,50,true,false);
         this.shieldImage = new Image(shieldURL,100,100,true,false);
         this.rotation = rotation;
         this.deathImageURL = deathImageURL;
         this.animationImageUrl = animationImageUrl;
+        this.deathAnimationBulletURL = deathAnimationBulletURL;
         loadImages();
     }
 
-    Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL, String shieldURL, int maxSprites){
+    Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL, String shieldURL, int maxSprites,String deathAnimationBulletURL){
         this.maxSprites = maxSprites;
         this.bulletImage = new Image(bulletURL,50,50,true,false);
         this.shieldImage = new Image(shieldURL,100,100,true,false);
         this.rotation = rotation;
         this.deathImageURL = deathImageURL;
         this.animationImageUrl = animationImageUrl;
+        this.deathAnimationBulletURL = deathAnimationBulletURL;
         loadImages();
     }
 
@@ -123,7 +126,7 @@ public class Entity extends Group {
     }
 
     public void shoot(){
-        bullets.getChildren().add(new BaseBullet(characterModel.getX()+characterModel.getImage().getWidth(),characterModel.getY()+(characterModel.getImage().getHeight()/2),bulletspeed,0,bulletImage,rotation));
+        bullets.getChildren().add(new BaseBullet(characterModel.getX()+characterModel.getImage().getWidth(),characterModel.getY()+(characterModel.getImage().getHeight()/2),bulletspeed,0,bulletImage,rotation,deathAnimationBulletURL));
     }
 
     void moveBullets(){

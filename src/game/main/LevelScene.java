@@ -84,26 +84,30 @@ public class LevelScene extends Scene {
                 for (Object o : enemys.getChildren()) {
                     EnemyBasic enemy = (EnemyBasic) o;
                     //if an enemy is hit
-                    if (enemy.getCharacterModel().intersects(bullet.getLayoutBounds()) && !enemy.isDead()) {
+                    if (enemy.getCharacterModel().intersects(bullet.getLayoutBounds()) && !enemy.isDead()&&!bullet.isDead()) {
                         if(!enemy.isInvincible()){
                             enemy.hit();
                             increaseScore(enemy.getPoints());
                         }
-                        bulletIterator.remove();
+                        bullet.hit();
                         continue loop;
                     }
                 }
                 for (Object o : meteors.getChildren()) {
                     Meteor meteor = (Meteor) o;
                     //if a meteor is hit remove the bullet
-                    if (meteor.getCharacterModel().intersects(bullet.getLayoutBounds())) {
-                        bulletIterator.remove();
+                    if (meteor.getCharacterModel().intersects(bullet.getLayoutBounds())&&!bullet.isDead()) {
+                        bullet.hit();
                         continue loop;
                     }
                 }
 
                 //if bullet out of screen
                 if (!bullet.intersects(-100, -100, stageWidth + stageWidth, stageHeight + 100)) {
+                    bulletIterator.remove();
+                }
+
+                if(bullet.isRemove()){
                     bulletIterator.remove();
                 }
             }
@@ -129,6 +133,7 @@ public class LevelScene extends Scene {
                     enemyIterator.remove();
                 }
 
+                //if an enemy collides with a meteor
                 for(Object o:meteors.getChildren()){
                     if(((Meteor)o).intersects(enemy.getLayoutBounds())&& !enemy.isDead()){
                         if (!enemy.isInvincible()) {
@@ -162,9 +167,9 @@ public class LevelScene extends Scene {
             {
                 BaseBullet bullet = (BaseBullet)bulletIterator.next();
                 //if the player is hit
-                if(player.getCharacterModel().intersects(bullet.getLayoutBounds())&&!player.isDead()){
+                if(player.getCharacterModel().intersects(bullet.getLayoutBounds())&&!player.isDead()&&!bullet.isDead()){
                     if(!player.isInvincible())player.hit();
-                    bulletIterator.remove();
+                    bullet.hit();
                     continue;
                 }
                 //if bullet out of screen
@@ -175,10 +180,13 @@ public class LevelScene extends Scene {
                 for (Object o : meteors.getChildren()) {
                     Meteor meteor = (Meteor) o;
                     //if a meteor is hit remove the bullet
-                    if (meteor.getCharacterModel().intersects(bullet.getLayoutBounds())) {
-                        bulletIterator.remove();
+                    if (meteor.getCharacterModel().intersects(bullet.getLayoutBounds())&&!bullet.isDead()) {
+                        bullet.hit();
                         continue loop;
                     }
+                }
+                if(bullet.isRemove()){
+                    bulletIterator.remove();
                 }
             }
 

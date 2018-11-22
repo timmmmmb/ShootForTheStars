@@ -12,7 +12,7 @@ public class EnemyBasic extends Entity {
     private int shootercd = 0;
 
     public EnemyBasic(Group bullets) {
-        super("Effects/Red Explosion/1_","Red/Enemy_animation/" ,270,"Red/bullet_red.png","Red/Enemy_animation/shield.png");
+        super("Effects/Galaxy/galaxy_","Red/Enemy_animation/" ,270,"Red/bullet_red.png","Red/Enemy_animation/shield.png","Effects/Red Explosion/1_");
         bulletsScene = bullets;
         speed = 2;
     }
@@ -36,7 +36,7 @@ public class EnemyBasic extends Entity {
 
     @Override
     public void shoot(){
-        bulletsScene.getChildren().add(new BaseBullet(characterModel.getX(),characterModel.getY()+(characterModel.getImage().getHeight()/2),-bulletspeed,0,bulletImage,rotation));
+        bulletsScene.getChildren().add(new BaseBullet(characterModel.getX(),characterModel.getY()+(characterModel.getImage().getHeight()/2),-bulletspeed,0,bulletImage,rotation,deathAnimationBulletURL));
     }
 
     public int getPoints() {
