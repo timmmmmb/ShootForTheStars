@@ -176,7 +176,7 @@ public class LevelScene extends Scene {
     }
 
     private static Group createGUI(double width, double height) {
-        Image backgroundImage = new Image("Background/background.jpg",width,height,true,false);
+        Image backgroundImage = new Image("Background/background.jpg",width,width,true,false);
         ImageView backgroundImageView = new ImageView(backgroundImage);
         root.setStyle(menuStyle);
         root.getChildren().addAll(backgroundImageView,player,enemys, scoreLabel,bullets);
