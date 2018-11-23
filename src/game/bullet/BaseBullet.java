@@ -8,29 +8,20 @@ import java.util.ArrayList;
 
 public class BaseBullet extends ImageView {
 
-    private ArrayList<Image> deathAnimationImages = new ArrayList<>();
-    private final String  deathImageURL;
+    private ArrayList<Image> deathAnimationImages;
     private boolean dead = false;
     private boolean remove = false;
     private final double xspeed;
     private final double yspeed;
     private int animateionFrame = 0;
-    public BaseBullet(double x,double y,double xspeed, double yspeed, Image image, double rotation, String deathImageURL) {
+    public BaseBullet(double x, double y, double xspeed, double yspeed, Image image, double rotation, ArrayList<Image> deathAnimationImages) {
         super(image);
-        this.deathImageURL = deathImageURL;
+        this.deathAnimationImages = deathAnimationImages;
         setX(x);
         setY(y-image.getHeight()/2);
         setRotate(rotation);
         this.xspeed = xspeed;
         this.yspeed = yspeed;
-        loadSprites();
-    }
-
-    private void loadSprites(){
-        int maxDeathAnimations = 16;
-        for(int i = 0; i<= maxDeathAnimations; i++){
-            deathAnimationImages.add(new Image(deathImageURL+i+".png",100,100,true,false));
-        }
     }
 
     public void move(){

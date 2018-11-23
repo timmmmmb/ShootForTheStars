@@ -1,8 +1,13 @@
 package game.entitiy;
 
+import game.image.ImageLoader;
+import javafx.scene.image.Image;
+
+import java.util.ArrayList;
+
 public class Meteor extends Entity {
-    public Meteor(double x, double y, String animationImageUrl) {
-        super("Effects/Red Explosion/1_",animationImageUrl ,270,"Red/bullet_red.png","Red/Enemy_animation/shield.png",1, "Effects/Blue Effects/1_");
+    public Meteor(double x, double y, ArrayList<Image> animationImage) {
+        super(animationImage, ImageLoader.getInstance().getExplosionImages(),ImageLoader.getInstance().getBulletRed(),ImageLoader.getInstance().getBulletRedEffect(),ImageLoader.getInstance().getRedShield(),270);
         setPosition(x,y);
         speed = 1;
     }

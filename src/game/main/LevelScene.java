@@ -2,6 +2,7 @@ package game.main;
 
 import game.bullet.BaseBullet;
 import game.entitiy.*;
+import game.image.ImageLoader;
 import game.menu.DeathScreen;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
@@ -13,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -32,6 +34,8 @@ public class LevelScene extends Scene {
     private static double stageHeight;
     private static boolean spawnMeteors = false;
     private static boolean spawnEnemys = true;
+    //TODO: make it possible to pause the game when pressing esc and opening a mid game menu
+    //TODO: remove the lags by loading all the images at the start of the game
     private static AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
@@ -325,14 +329,11 @@ public class LevelScene extends Scene {
 
     private static void spawnMeteor(){
         Random rng = new Random();
-        int enemytype = rng.nextInt(4);
+        int meteor = rng.nextInt(4);
         int y = rng.nextInt((int)stageHeight-100)+1;
-        String imageURL = "Aestroids/aestroid_brown.png";
-        if(enemytype==0)imageURL = "Aestroids/aestroid_brown";
-        if(enemytype==1)imageURL = "Aestroids/aestroid_dark";
-        if(enemytype==2)imageURL = "Aestroids/aestroid_gay_2";
-        if(enemytype==3)imageURL = "Aestroids/aestroid_gray";
-        meteors.getChildren().add(new Meteor(stageWidth,y,imageURL));
+        ArrayList<Image> meteorimage = new ArrayList<Image>();
+        meteorimage.add(ImageLoader.getInstance().getMeteors().get(meteor));
+        meteors.getChildren().add(new Meteor(stageWidth,y, meteorimage));
     }
 
     private static void spawnMotherShip(){

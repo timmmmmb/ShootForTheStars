@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class Entity extends Group {
     double speed = 5;
-    ImageView characterModel = new ImageView();
     boolean shield = false;
     int maxSprites = 8;
     private boolean invincible = false;
@@ -18,66 +17,27 @@ public class Entity extends Group {
     boolean dead = false;
     boolean remove = false;
 
-    ArrayList<Image> animationImages = new ArrayList<>();
-    ArrayList<Image> deathAnimationImages = new ArrayList<>();
-    Image bulletImage;
-    Image shieldImage;
+    ImageView characterModel = new ImageView();
     ImageView shieldView;
-    final String  deathImageURL;
-    final String  animationImageUrl;
+
+    final ArrayList<Image> animationImages;
+    final ArrayList<Image> deathAnimationImages;
+    final ArrayList<Image> bulletEffect;
+    final Image bulletImage;
+    final Image shieldImage;
     final double rotation;
     final double bulletspeed = 10;
     final int bulletcd = 30;
-    final String deathAnimationBulletURL;
     int bulletTimer;
     Group bullets = new Group();
-    Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL, String shieldURL, String deathAnimationBulletURL){
-        this.bulletImage = new Image(bulletURL,50,50,true,false);
-        this.shieldImage = new Image(shieldURL,100,100,true,false);
-        this.rotation = rotation;
-        this.deathImageURL = deathImageURL;
-        this.animationImageUrl = animationImageUrl;
-        this.deathAnimationBulletURL = deathAnimationBulletURL;
-        loadImages();
-    }
 
-    Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL, String shieldURL, int maxSprites,String deathAnimationBulletURL){
-        this.maxSprites = maxSprites;
-        this.bulletImage = new Image(bulletURL,50,50,true,false);
-        this.shieldImage = new Image(shieldURL,100,100,true,false);
+    public Entity(ArrayList<Image> animationImages, ArrayList<Image> deathAnimationImages,Image bulletImage, ArrayList<Image> bulletEffect,  Image shieldImage, double rotation) {
+        this.animationImages = animationImages;
+        this.deathAnimationImages = deathAnimationImages;
+        this.bulletEffect = bulletEffect;
+        this.bulletImage = bulletImage;
+        this.shieldImage = shieldImage;
         this.rotation = rotation;
-        this.deathImageURL = deathImageURL;
-        this.animationImageUrl = animationImageUrl;
-        this.deathAnimationBulletURL = deathAnimationBulletURL;
-        loadImages();
-    }
-
-    public Entity(String deathImageURL, String animationImageUrl, int rotation, String bulletURL, String shieldURL, String deathAnimationBulletURL, int maxSprites) {
-        this.bulletImage = new Image(bulletURL,50,50,true,false);
-        this.shieldImage = new Image(shieldURL,100,100,true,false);
-        this.rotation = rotation;
-        this.deathImageURL = deathImageURL;
-        this.animationImageUrl = animationImageUrl;
-        this.maxSprites = maxSprites;
-        this.deathAnimationBulletURL = deathAnimationBulletURL;
-        loadImages();
-    }
-
-    void loadImages(){
-        shieldView = new ImageView(shieldImage);
-        for(int i = 1; i<= maxSprites; i++){
-            animationImages.add(new Image(animationImageUrl+i+".png",100,100,true,false));
-        }
-        int maxDeathAnimations = 16;
-        for(int i = 0; i<= maxDeathAnimations; i++){
-            deathAnimationImages.add(new Image(deathImageURL+i+".png",100,100,true,false));
-        }
-        characterModel = new ImageView(animationImages.get(0));
-        characterModel.setRotate(rotation);
-        this.getChildren().add(characterModel);
-        this.getChildren().add(shieldView);
-        this.getChildren().add(bullets);
-        shieldView.setVisible(false);
     }
 
     void animate(){
@@ -137,7 +97,7 @@ public class Entity extends Group {
     }
 
     public void shoot(){
-        bullets.getChildren().add(new BaseBullet(characterModel.getX()+characterModel.getImage().getWidth(),characterModel.getY()+(characterModel.getImage().getHeight()/2),bulletspeed,0,bulletImage,rotation,deathAnimationBulletURL));
+        bullets.getChildren().add(new BaseBullet(characterModel.getX()+characterModel.getImage().getWidth(),characterModel.getY()+(characterModel.getImage().getHeight()/2),bulletspeed,0,bulletImage,rotation,bulletEffect));
     }
 
     void moveBullets(){
