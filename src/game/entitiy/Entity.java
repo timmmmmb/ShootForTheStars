@@ -11,26 +11,26 @@ import java.util.ArrayList;
 public class Entity extends Group {
     double speed = 5;
     ImageView characterModel = new ImageView();
-    private boolean shield = false;
+    boolean shield = false;
     int maxSprites = 8;
     private boolean invincible = false;
-    private int animationTimer = 0;
-    private boolean dead = false;
-    private boolean remove = false;
+    int animationTimer = 0;
+    boolean dead = false;
+    boolean remove = false;
 
-    private ArrayList<Image> animationImages = new ArrayList<>();
-    private ArrayList<Image> deathAnimationImages = new ArrayList<>();
-    final Image bulletImage;
-    final Image shieldImage;
+    ArrayList<Image> animationImages = new ArrayList<>();
+    ArrayList<Image> deathAnimationImages = new ArrayList<>();
+    Image bulletImage;
+    Image shieldImage;
     ImageView shieldView;
-    private final String  deathImageURL;
-    private final String  animationImageUrl;
+    final String  deathImageURL;
+    final String  animationImageUrl;
     final double rotation;
     final double bulletspeed = 10;
     final int bulletcd = 30;
     final String deathAnimationBulletURL;
     int bulletTimer;
-    private Group bullets = new Group();
+    Group bullets = new Group();
     Entity(String deathImageURL, String animationImageUrl, double rotation, String bulletURL, String shieldURL, String deathAnimationBulletURL){
         this.bulletImage = new Image(bulletURL,50,50,true,false);
         this.shieldImage = new Image(shieldURL,100,100,true,false);
@@ -52,7 +52,18 @@ public class Entity extends Group {
         loadImages();
     }
 
-    private void loadImages(){
+    public Entity(String deathImageURL, String animationImageUrl, int rotation, String bulletURL, String shieldURL, String deathAnimationBulletURL, int maxSprites) {
+        this.bulletImage = new Image(bulletURL,50,50,true,false);
+        this.shieldImage = new Image(shieldURL,100,100,true,false);
+        this.rotation = rotation;
+        this.deathImageURL = deathImageURL;
+        this.animationImageUrl = animationImageUrl;
+        this.maxSprites = maxSprites;
+        this.deathAnimationBulletURL = deathAnimationBulletURL;
+        loadImages();
+    }
+
+    void loadImages(){
         shieldView = new ImageView(shieldImage);
         for(int i = 1; i<= maxSprites; i++){
             animationImages.add(new Image(animationImageUrl+i+".png",100,100,true,false));
@@ -148,6 +159,10 @@ public class Entity extends Group {
         return invincible;
     }
 
+    public void setInvincible(boolean invincible) {
+        this.invincible=invincible;
+    }
+
     public boolean isShield() {
         return shield;
     }
@@ -156,4 +171,12 @@ public class Entity extends Group {
         shield = true;
     }
 
+
+    public double getCenterX(){
+        return characterModel.getX()+characterModel.getImage().getWidth()/2;
+    }
+
+    public double getCenterY(){
+        return characterModel.getY()+characterModel.getImage().getHeight()/2;
+    }
 }

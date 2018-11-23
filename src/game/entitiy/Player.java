@@ -9,6 +9,7 @@ public class Player extends Entity {
     public Player() {
         super("Effects/Galaxy/galaxy_","Blue/Animation/" ,90, "Blue/bullet.png","Blue/Animation/shield.png","Effects/Blue Effects/1_");
         getShield();
+        //setInvincible(true);
     }
 
     private void movePlayer(){

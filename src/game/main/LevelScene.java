@@ -30,14 +30,21 @@ public class LevelScene extends Scene {
     private static Label scoreLabel = new Label("Score: "+score);
     private static double stageWidth;
     private static double stageHeight;
+    private static boolean spawnMeteors = false;
+    private static boolean spawnEnemys = true;
     private static AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
             if(timer == resetTimer){
                 timer = 0;
                 difficulty++;
-                spawnMeteor();
+                if(difficulty % 3==0){
+                    spawnMotherShip();
+                }else{
+                    spawnMeteor();
+                }
                 player.getShield();
+                spawnMeteors = !spawnMeteors;
             }
             timer++;
             if(timer%30 ==0&&!player.isDead()){
@@ -56,7 +63,7 @@ public class LevelScene extends Scene {
                 spawn();
             }
 
-            if(timer%400 ==0){
+            if(timer%600 ==0&&spawnMeteors){
                 spawnMeteor();
             }
 
@@ -257,7 +264,6 @@ public class LevelScene extends Scene {
         root.getChildren().addAll(backgroundImageView,scoreLabel,player,enemys,bullets,meteors);
         player.setPosition(0,(stageHeight-player.getHeight())/2);
         spawn();
-        spawnMeteor();
         return root;
     }
 
@@ -275,6 +281,7 @@ public class LevelScene extends Scene {
     }
 
     private static void spawn(){
+        if(!spawnEnemys)return;
         //randomize the enemy and his startpos
         Random rng = new Random();
         int enemytype = rng.nextInt(4);
@@ -302,6 +309,7 @@ public class LevelScene extends Scene {
     }
 
     private static void spawnThreeUpAndDown(){
+        if(!spawnEnemys)return;
         UpAndDownEnemy enemy = new UpAndDownEnemy(bullets);
         enemy.setPosition(stageWidth,1);
         enemys.getChildren().add(enemy);
@@ -325,5 +333,38 @@ public class LevelScene extends Scene {
         if(enemytype==2)imageURL = "Aestroids/aestroid_gay_2";
         if(enemytype==3)imageURL = "Aestroids/aestroid_gray";
         meteors.getChildren().add(new Meteor(stageWidth,y,imageURL));
+    }
+
+    private static void spawnMotherShip(){
+        MotherShip motherShip = new MotherShip(bullets);
+        motherShip.setPosition(stageWidth,stageHeight/2-motherShip.getHeight()/2);
+        enemys.getChildren().add(motherShip);
+
+        SmallShip smallShip = new SmallShip(bullets,motherShip);
+        smallShip.setTheta(Math.toRadians(0));
+        smallShip.setPosition(motherShip.getCenterX() - (int) (Math.sin(smallShip.getTheta()) * smallShip.getRadius()), //
+                motherShip.getCenterY()- (int) (Math.cos(smallShip.getTheta()) * smallShip.getRadius()));
+        enemys.getChildren().add(smallShip);
+        smallShip = new SmallShip(bullets,motherShip);
+        smallShip.setTheta(Math.toRadians(90));
+        smallShip.setPosition(motherShip.getCenterX() - (int) (Math.sin(smallShip.getTheta()) * smallShip.getRadius()), //
+                motherShip.getCenterY()- (int) (Math.cos(smallShip.getTheta()) * smallShip.getRadius()));
+        enemys.getChildren().add(smallShip);
+        smallShip = new SmallShip(bullets,motherShip);
+        smallShip.setTheta(Math.toRadians(180));
+        smallShip.setPosition(motherShip.getCenterX() - (int) (Math.sin(smallShip.getTheta()) * smallShip.getRadius()), //
+                motherShip.getCenterY()- (int) (Math.cos(smallShip.getTheta()) * smallShip.getRadius()));
+        enemys.getChildren().add(smallShip);
+        smallShip = new SmallShip(bullets,motherShip);
+        smallShip.setTheta(Math.toRadians(270));
+        smallShip.setPosition(motherShip.getCenterX() - (int) (Math.sin(smallShip.getTheta()) * smallShip.getRadius()), //
+                motherShip.getCenterY()- (int) (Math.cos(smallShip.getTheta()) * smallShip.getRadius()));
+        enemys.getChildren().add(smallShip);
+    }
+
+    private static void spawnSmallShip(){
+        SmallShip enemy = new SmallShip(bullets);
+        enemy.setPosition(stageWidth,stageHeight/2);
+        enemys.getChildren().add(enemy);
     }
 }

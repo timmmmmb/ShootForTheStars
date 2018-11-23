@@ -2,6 +2,8 @@ package game.entitiy;
 
 import game.bullet.BaseBullet;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 
 public class EnemyBasic extends Entity {
@@ -13,6 +15,18 @@ public class EnemyBasic extends Entity {
 
     public EnemyBasic(Group bullets) {
         super("Effects/Galaxy/galaxy_","Red/Enemy_animation/" ,270,"Red/bullet_red.png","Red/Enemy_animation/shield.png","Effects/Red Explosion/1_");
+        bulletsScene = bullets;
+        speed = 2;
+    }
+
+    public EnemyBasic(String animationURL,Group bullets) {
+        super("Effects/Galaxy/galaxy_",animationURL ,270,"Red/bullet_red.png","Red/Enemy_animation/shield.png","Effects/Red Explosion/1_");
+        bulletsScene = bullets;
+        speed = 2;
+    }
+
+    public EnemyBasic(String animationURL,int maxSprites,Group bullets) {
+        super("Effects/Galaxy/galaxy_",animationURL ,270,"Red/bullet_red.png","Red/Enemy_animation/shield.png","Effects/Red Explosion/1_",maxSprites);
         bulletsScene = bullets;
         speed = 2;
     }
@@ -41,5 +55,15 @@ public class EnemyBasic extends Entity {
 
     public int getPoints() {
         return points;
+    }
+
+    @Override
+    void loadImages(){
+        super.loadImages();
+    }
+
+    @Override
+    void animate(){
+        super.animate();
     }
 }
