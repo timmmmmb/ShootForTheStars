@@ -35,7 +35,6 @@ public class LevelScene extends Scene {
     private static boolean spawnMeteors = false;
     private static boolean spawnEnemys = true;
     //TODO: make it possible to pause the game when pressing esc and opening a mid game menu
-    //TODO: remove the lags by loading all the images at the start of the game
     private static AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
@@ -331,7 +330,7 @@ public class LevelScene extends Scene {
         Random rng = new Random();
         int meteor = rng.nextInt(4);
         int y = rng.nextInt((int)stageHeight-100)+1;
-        ArrayList<Image> meteorimage = new ArrayList<Image>();
+        ArrayList<Image> meteorimage = new ArrayList<>();
         meteorimage.add(ImageLoader.getInstance().getMeteors().get(meteor));
         meteors.getChildren().add(new Meteor(stageWidth,y, meteorimage));
     }

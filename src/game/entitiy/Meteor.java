@@ -10,6 +10,7 @@ public class Meteor extends Entity {
         super(animationImage, ImageLoader.getInstance().getExplosionImages(),ImageLoader.getInstance().getBulletRed(),ImageLoader.getInstance().getBulletRedEffect(),ImageLoader.getInstance().getRedShield(),270);
         setPosition(x,y);
         speed = 1;
+        shieldView.setVisible(false);
     }
 
     public void update(){

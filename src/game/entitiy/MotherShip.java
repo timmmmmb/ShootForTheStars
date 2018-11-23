@@ -6,7 +6,7 @@ import javafx.scene.Group;
 public class MotherShip extends  EnemyBasic{
     private double rotate;
     public MotherShip(Group bullets) {
-        super(bullets, ImageLoader.getInstance().getMotherShip(), ImageLoader.getInstance().getExplosionImages(),ImageLoader.getInstance().getMotherShipBullet(),ImageLoader.getInstance().getAnimationImagesRed(),ImageLoader.getInstance().getRedMothershipShield());
+        super(bullets, ImageLoader.getInstance().getMotherShip(), ImageLoader.getInstance().getExplosionImages(),ImageLoader.getInstance().getMotherShipBullet(),ImageLoader.getInstance().getBulletRedEffect(),ImageLoader.getInstance().getRedMothershipShield());
         speed = 1;
         getShield();
     }
