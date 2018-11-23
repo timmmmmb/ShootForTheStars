@@ -1,9 +1,11 @@
 package game.entitiy;
 
 import game.bullet.BaseBullet;
+import game.image.ImageLoader;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
+import java.util.ArrayList;
 
 
 public class EnemyBasic extends Entity {
@@ -14,19 +16,34 @@ public class EnemyBasic extends Entity {
     private int shootercd = 0;
 
     public EnemyBasic(Group bullets) {
-        super("Effects/Galaxy/galaxy_","Red/Enemy_animation/" ,270,"Red/bullet_red.png","Red/Enemy_animation/shield.png","Effects/Red Explosion/1_");
+        super(  ImageLoader.getInstance().getAnimationImagesRed(),
+                ImageLoader.getInstance().getExplosionImages(),
+                ImageLoader.getInstance().getBulletRed(),
+                ImageLoader.getInstance().getBulletRedEffect(),
+                ImageLoader.getInstance().getRedShield(),
+                270);
         bulletsScene = bullets;
         speed = 2;
     }
 
-    public EnemyBasic(String animationURL,Group bullets) {
-        super("Effects/Galaxy/galaxy_",animationURL ,270,"Red/bullet_red.png","Red/Enemy_animation/shield.png","Effects/Red Explosion/1_");
+    public EnemyBasic(Group bullets, ArrayList<Image> animation) {
+        super(  animation,
+                ImageLoader.getInstance().getExplosionImages(),
+                ImageLoader.getInstance().getBulletRed(),
+                ImageLoader.getInstance().getBulletRedEffect(),
+                ImageLoader.getInstance().getRedShield(),
+                270);
         bulletsScene = bullets;
         speed = 2;
     }
 
-    public EnemyBasic(String animationURL,int maxSprites,Group bullets) {
-        super("Effects/Galaxy/galaxy_",animationURL ,270,"Red/bullet_red.png","Red/Enemy_animation/shield.png","Effects/Red Explosion/1_",maxSprites);
+    public EnemyBasic(Group bullets, ArrayList<Image> animationImages, ArrayList<Image> deathAnimationImages, Image bulletImage, ArrayList<Image> bulletEffect, Image shieldImage) {
+        super(  animationImages,
+                deathAnimationImages,
+                bulletImage,
+                bulletEffect,
+                shieldImage,
+                270);
         bulletsScene = bullets;
         speed = 2;
     }
@@ -50,16 +67,11 @@ public class EnemyBasic extends Entity {
 
     @Override
     public void shoot(){
-        bulletsScene.getChildren().add(new BaseBullet(characterModel.getX(),characterModel.getY()+(characterModel.getImage().getHeight()/2),-bulletspeed,0,bulletImage,rotation,deathAnimationBulletURL));
+        bulletsScene.getChildren().add(new BaseBullet(characterModel.getX(),characterModel.getY()+(characterModel.getImage().getHeight()/2),-bulletspeed,0,bulletImage,rotation,bulletEffect));
     }
 
     public int getPoints() {
         return points;
-    }
-
-    @Override
-    void loadImages(){
-        super.loadImages();
     }
 
     @Override

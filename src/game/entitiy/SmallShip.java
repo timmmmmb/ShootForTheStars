@@ -1,5 +1,6 @@
 package game.entitiy;
 
+import game.image.ImageLoader;
 import javafx.scene.Group;
 
 public class SmallShip extends EnemyBasic {
@@ -8,12 +9,12 @@ public class SmallShip extends EnemyBasic {
     private double theta = 0;
     private double thetaIncrement = 0.01;
     public SmallShip(Group bullets, MotherShip motherShip) {
-        super("Red/small_ship_animation/", 5, bullets);
+        super(bullets, ImageLoader.getInstance().getAnimationSmallShip());
         this.motherShip = motherShip;
     }
 
     public SmallShip(Group bullets) {
-        super("Red/small_ship_animation/", 5, bullets);
+        super(bullets, ImageLoader.getInstance().getAnimationSmallShip());
     }
 
     @Override

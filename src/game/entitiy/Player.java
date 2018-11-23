@@ -1,5 +1,7 @@
 package game.entitiy;
 
+import game.image.ImageLoader;
+
 public class Player extends Entity {
     private boolean up = false;
     private boolean down = false;
@@ -7,7 +9,12 @@ public class Player extends Entity {
     private boolean right = false;
     private boolean shooting = false;
     public Player() {
-        super("Effects/Galaxy/galaxy_","Blue/Animation/" ,90, "Blue/bullet.png","Blue/Animation/shield.png","Effects/Blue Effects/1_");
+        super(  ImageLoader.getInstance().getAnimationImagesBlue(),
+                ImageLoader.getInstance().getExplosionImages(),
+                ImageLoader.getInstance().getBulletBlue(),
+                ImageLoader.getInstance().getBulletBlueEffect(),
+                ImageLoader.getInstance().getBlueShield(),
+                90);
         getShield();
         //setInvincible(true);
     }

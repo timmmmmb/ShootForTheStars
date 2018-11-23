@@ -10,34 +10,33 @@ import java.util.ArrayList;
 
 public class Entity extends Group {
     double speed = 5;
-    boolean shield = false;
-    int maxSprites = 8;
+    private boolean shield = false;
     private boolean invincible = false;
-    int animationTimer = 0;
+    private int animationTimer = 0;
     boolean dead = false;
-    boolean remove = false;
-
-    ImageView characterModel = new ImageView();
+    private boolean remove = false;
+    ImageView characterModel;
     ImageView shieldView;
-
-    final ArrayList<Image> animationImages;
-    final ArrayList<Image> deathAnimationImages;
+    private final ArrayList<Image> animationImages;
+    private final ArrayList<Image> deathAnimationImages;
     final ArrayList<Image> bulletEffect;
     final Image bulletImage;
-    final Image shieldImage;
     final double rotation;
     final double bulletspeed = 10;
     final int bulletcd = 30;
     int bulletTimer;
-    Group bullets = new Group();
+    private Group bullets = new Group();
 
-    public Entity(ArrayList<Image> animationImages, ArrayList<Image> deathAnimationImages,Image bulletImage, ArrayList<Image> bulletEffect,  Image shieldImage, double rotation) {
+    Entity(ArrayList<Image> animationImages, ArrayList<Image> deathAnimationImages, Image bulletImage, ArrayList<Image> bulletEffect, Image shieldImage, double rotation) {
         this.animationImages = animationImages;
         this.deathAnimationImages = deathAnimationImages;
         this.bulletEffect = bulletEffect;
         this.bulletImage = bulletImage;
-        this.shieldImage = shieldImage;
+        this.shieldView = new ImageView(shieldImage);
         this.rotation = rotation;
+        this.characterModel = new ImageView(animationImages.get(0));
+        characterModel.setRotate(rotation);
+        this.getChildren().addAll(characterModel,bullets,shieldView);
     }
 
     void animate(){
@@ -130,7 +129,6 @@ public class Entity extends Group {
     public void getShield() {
         shield = true;
     }
-
 
     public double getCenterX(){
         return characterModel.getX()+characterModel.getImage().getWidth()/2;

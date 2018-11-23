@@ -18,7 +18,7 @@ public class ImageLoader {
     private Image redMothershipShield;
     private Image bulletRed;
     private Image bulletBlue;
-    private ArrayList<Image> motherShip;
+    private ArrayList<Image> motherShip = new ArrayList<>();
     private ArrayList<Image> bulletBlueEffect = new ArrayList<>();
     private ArrayList<Image> bulletRedEffect = new ArrayList<>();
     private ArrayList<Image> meteors = new ArrayList<>();
@@ -48,7 +48,7 @@ public class ImageLoader {
             animationSmallShip.add(new Image("Red/small_ship_animation/"+i+".png",75,75,true,false));
         }
         //load mothership image
-        motherShip .add(new Image("Red/mothership_try.png",200,200,true,false));
+        motherShip.add(new Image("Red/mothership_try.png",200,200,true,false));
         //load explosionimages
         for(int i = 0; i<= 16; i++){
             explosionImages.add(new Image("Effects/Galaxy/galaxy_"+i+".png",100,100,true,false));
@@ -63,10 +63,10 @@ public class ImageLoader {
         for(int i = 0; i<= 16; i++){
             bulletRedEffect.add(new Image("Effects/Red Explosion/1_"+i+".png",100,100,true,false));
         }
-        meteors.add(new Image("Aestroids/aestroid_brown"));
-        meteors.add(new Image("Aestroids/aestroid_dark"));
-        meteors.add(new Image("Aestroids/aestroid_gay_2"));
-        meteors.add(new Image("Aestroids/aestroid_gray"));
+        meteors.add(new Image("Aestroids/aestroid_brown.png",100,100,true,false));
+        meteors.add(new Image("Aestroids/aestroid_dark.png",100,100,true,false));
+        meteors.add(new Image("Aestroids/aestroid_gay_2.png",100,100,true,false));
+        meteors.add(new Image("Aestroids/aestroid_gray.png",100,100,true,false));
     }
 
     public static ImageLoader getInstance(){
