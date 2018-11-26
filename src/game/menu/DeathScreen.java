@@ -37,8 +37,8 @@ public class DeathScreen extends Scene {
     private static VBox createGUI(double width, double height, Stage gameStage) {
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
-        Image exitImageOnHover = new Image("Menu Screen/exit_buttons_pressed.png",height/5.0,height/5.0,true,false);
-        Image exitImage = new Image("Menu Screen/exit_buttons.png", height/5.0,height/5.0,true,false);
+        Image exitImageOnHover = new Image("Images/Menu Screen/exit_buttons_pressed.png",height/5.0,height/5.0,true,false);
+        Image exitImage = new Image("Images/Menu Screen/exit_buttons.png", height/5.0,height/5.0,true,false);
         Button exitButton = new Button("", new ImageView(exitImage));
         exitButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
                 e -> exitButton.setGraphic(new ImageView(exitImageOnHover)));
@@ -48,8 +48,8 @@ public class DeathScreen extends Scene {
             gameStage.setScene(StartMenu.getInstance(width, height, gameStage));
             System.out.println(gameStage.getScene());
         });
-        Image playImage = new Image("Menu Screen/play_buttons.png",height/5.0,height/5.0,true,false);
-        Image playImageOnHover = new Image("Menu Screen/play_buttons_pressed_blue.png",height/5.0,height/5.0,true,false);
+        Image playImage = new Image("Images/Menu Screen/play_buttons.png",height/5.0,height/5.0,true,false);
+        Image playImageOnHover = new Image("Images/Menu Screen/play_buttons_pressed_blue.png",height/5.0,height/5.0,true,false);
         Button playButton = new Button("", new ImageView(playImage));
         playButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
                 e -> playButton.setGraphic(new ImageView(playImageOnHover)));

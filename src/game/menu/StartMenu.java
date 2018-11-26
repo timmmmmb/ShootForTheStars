@@ -45,19 +45,19 @@ public class StartMenu extends Scene {
     private static VBox createGUI(double width, double height, Stage gameStage){
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
-        Image titleImage = new Image("Menu Screen/top_banner.jpg",height/2.5,height/2.5,true,false);
+        Image titleImage = new Image("Images/Menu Screen/top_banner.jpg",height/2.5,height/2.5,true,false);
         ImageView titleImageView = new ImageView(titleImage);
-        Image playImage = new Image("Menu Screen/play_buttons.png",height/5.0,height/5.0,true,false);
-        Image playImageOnHover = new Image("Menu Screen/play_buttons_pressed_blue.png",height/5.0,height/5.0,true,false);
+        Image playImage = new Image("Images/Menu Screen/play_buttons.png",height/5.0,height/5.0,true,false);
+        Image playImageOnHover = new Image("Images/Menu Screen/play_buttons_pressed_blue.png",height/5.0,height/5.0,true,false);
         Button playButton = new Button("", new ImageView(playImage));
-        Image optionsImageOnHover = new Image("Menu Screen/optionst_buttons_pressed.png",height/5.0,height/5.0,true,false);
-        Image optionsImage = new Image("Menu Screen/optionst_buttons.png", height/5.0,height/5.0,true,false);
+        Image optionsImageOnHover = new Image("Images/Menu Screen/optionst_buttons_pressed.png",height/5.0,height/5.0,true,false);
+        Image optionsImage = new Image("Images/Menu Screen/optionst_buttons.png", height/5.0,height/5.0,true,false);
         Button optionsButton = new Button("", new ImageView(optionsImage));
-        Image creditsImageOnHover = new Image("Menu Screen/Creditst_buttons_pressed.png",height/5.0,height/5.0,true,false);
-        Image creditsImage = new Image("Menu Screen/Creditst_buttons.png", height/5.0,height/5.0,true,false);
+        Image creditsImageOnHover = new Image("Images/Menu Screen/Creditst_buttons_pressed.png",height/5.0,height/5.0,true,false);
+        Image creditsImage = new Image("Images/Menu Screen/Creditst_buttons.png", height/5.0,height/5.0,true,false);
         Button creditsButton = new Button("", new ImageView(creditsImage));
-        Image exitImageOnHover = new Image("Menu Screen/exit_buttons_pressed.png",height/5.0,height/5.0,true,false);
-        Image exitImage = new Image("Menu Screen/exit_buttons.png", height/5.0,height/5.0,true,false);
+        Image exitImageOnHover = new Image("Images/Menu Screen/exit_buttons_pressed.png",height/5.0,height/5.0,true,false);
+        Image exitImage = new Image("Images/Menu Screen/exit_buttons.png", height/5.0,height/5.0,true,false);
         Button exitButton = new Button("", new ImageView(exitImage));
         playButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
                 e -> playButton.setGraphic(new ImageView(playImageOnHover)));

@@ -32,8 +32,8 @@ class Credits extends Scene {
         root.setAlignment(Pos.CENTER);
         Label credits = new Label("Programmer: Frey Tim\nGame Design: Frey Tim\nGraphics: Unlucky Studios");
         credits.setStyle(menuStyle);
-        Image exitImageOnHover = new Image("Menu Screen/exit_buttons_pressed.png",height/5.0,height/5.0,true,false);
-        Image exitImage = new Image("Menu Screen/exit_buttons.png", height/5.0,height/5.0,true,false);
+        Image exitImageOnHover = new Image("Images/Menu Screen/exit_buttons_pressed.png",height/5.0,height/5.0,true,false);
+        Image exitImage = new Image("Images/Menu Screen/exit_buttons.png", height/5.0,height/5.0,true,false);
         Button exitButton = new Button("", new ImageView(exitImage));
         exitButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
                 e -> exitButton.setGraphic(new ImageView(exitImageOnHover)));

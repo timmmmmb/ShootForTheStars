@@ -33,40 +33,40 @@ public class ImageLoader {
      */
     private void initializeImages() {
         //load shields
-        redShield = new Image("Red/Enemy_animation/shield.png",100,100,true,false);
-        redMothershipShield = new Image("Red/Enemy_animation/shield.png",200,200,true,false);
-        blueShield = new Image("Blue/Animation/shield.png",100,100,true,false);
+        redShield = new Image("Images/Red/Enemy_animation/shield.png",100,100,true,false);
+        redMothershipShield = new Image("Images/Red/Enemy_animation/shield.png",200,200,true,false);
+        blueShield = new Image("Images/Blue/Animation/shield.png",100,100,true,false);
         //load animation images
         for(int i = 1; i<= 8; i++){
-            animationImagesRed.add(new Image("Red/Enemy_animation/"+i+".png",100,100,true,false));
+            animationImagesRed.add(new Image("Images/Red/Enemy_animation/" +i+".png",100,100,true,false));
         }
         for(int i = 1; i<= 8; i++){
-            animationImagesBlue.add(new Image("Blue/Animation/"+i+".png",100,100,true,false));
+            animationImagesBlue.add(new Image("Images/Blue/Animation/" +i+".png",100,100,true,false));
         }
         //load small shipanimation
         for(int i = 1; i<= 5; i++){
-            animationSmallShip.add(new Image("Red/small_ship_animation/"+i+".png",75,75,true,false));
+            animationSmallShip.add(new Image("Images/Red/small_ship_animation/" +i+".png",75,75,true,false));
         }
         //load mothership image
-        motherShip.add(new Image("Red/mothership_try.png",200,200,true,false));
+        motherShip.add(new Image("Images/Red/mothership_try.png",200,200,true,false));
         //load explosionimages
         for(int i = 0; i<= 16; i++){
-            explosionImages.add(new Image("Effects/Galaxy/galaxy_"+i+".png",100,100,true,false));
+            explosionImages.add(new Image("Images/Effects/Galaxy/galaxy_" +i+".png",100,100,true,false));
         }
         //load bullet images
-        motherShipBullet = new Image("Red/bullet_red.png",100,100,true,false);
-        bulletRed = new Image("Red/bullet_red.png",50,50,true,false);
-        bulletBlue = new Image("Blue/bullet.png",50,50,true,false);
+        motherShipBullet = new Image("Images/Red/bullet_red.png",100,100,true,false);
+        bulletRed = new Image("Images/Red/bullet_red.png",50,50,true,false);
+        bulletBlue = new Image("Images/Blue/bullet.png",50,50,true,false);
         for(int i = 0; i<= 16; i++){
-            bulletBlueEffect.add(new Image("Effects/Blue Effects/1_"+i+".png",100,100,true,false));
+            bulletBlueEffect.add(new Image("Images/Effects/Blue Effects/1_" +i+".png",100,100,true,false));
         }
         for(int i = 0; i<= 16; i++){
-            bulletRedEffect.add(new Image("Effects/Red Explosion/1_"+i+".png",100,100,true,false));
+            bulletRedEffect.add(new Image("Images/Effects/Red Explosion/1_" +i+".png",100,100,true,false));
         }
-        meteors.add(new Image("Aestroids/aestroid_brown.png",100,100,true,false));
-        meteors.add(new Image("Aestroids/aestroid_dark.png",100,100,true,false));
-        meteors.add(new Image("Aestroids/aestroid_gay_2.png",100,100,true,false));
-        meteors.add(new Image("Aestroids/aestroid_gray.png",100,100,true,false));
+        meteors.add(new Image("Images/Aestroids/aestroid_brown.png",100,100,true,false));
+        meteors.add(new Image("Images/Aestroids/aestroid_dark.png",100,100,true,false));
+        meteors.add(new Image("Images/Aestroids/aestroid_gay_2.png",100,100,true,false));
+        meteors.add(new Image("Images/Aestroids/aestroid_gray.png",100,100,true,false));
     }
 
     public static ImageLoader getInstance(){
