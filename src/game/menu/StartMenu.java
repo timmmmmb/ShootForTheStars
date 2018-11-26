@@ -1,6 +1,7 @@
 package game.menu;
 
 import game.main.LevelScene;
+import game.settings.Settings;
 import game.sound.SoundLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -27,6 +28,7 @@ public class StartMenu extends Scene {
             //start the music
             mediaPlayer = new MediaPlayer(SoundLoader.getInstance().getMusic1());
             mediaPlayer.setAutoPlay(true);
+            mediaPlayer.setVolume(Settings.musicVolume);
             mediaPlayer.play();
             instance = new StartMenu(createGUI(width, height, gameStage), width, height);
         }

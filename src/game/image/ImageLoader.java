@@ -1,5 +1,6 @@
 package game.image;
 
+import game.settings.Settings;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class ImageLoader {
     private ArrayList<Image> animationImagesRed = new ArrayList<>();
     private ArrayList<Image> explosionImages = new ArrayList<>();
     private ArrayList<Image> animationSmallShip = new ArrayList<>();
+    private Image backgroundImage;
     private Image redShield;
     private Image blueShield;
     private Image redMothershipShield;
@@ -32,6 +34,8 @@ public class ImageLoader {
      * loads all the images
      */
     private void initializeImages() {
+        //load Background
+        backgroundImage = new Image("Images/Background/background.jpg", Settings.width,Settings.width,true,false);
         //load shields
         redShield = new Image("Images/Red/Enemy_animation/shield.png",100,100,true,false);
         redMothershipShield = new Image("Images/Red/Enemy_animation/shield.png",200,200,true,false);
@@ -130,5 +134,9 @@ public class ImageLoader {
 
     public ArrayList<Image> getMeteors() {
         return meteors;
+    }
+
+    public Image getBackgroundImage() {
+        return backgroundImage;
     }
 }

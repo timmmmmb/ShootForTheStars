@@ -261,8 +261,7 @@ public class LevelScene extends Scene {
     }
 
     private static Group createGUI(double width, double height) {
-        Image backgroundImage = new Image("Images/Background/background.jpg",width,width,true,false);
-        ImageView backgroundImageView = new ImageView(backgroundImage);
+        ImageView backgroundImageView = new ImageView(ImageLoader.getInstance().getBackgroundImage());
         root.setStyle(menuStyle);
         root.getChildren().addAll(backgroundImageView,scoreLabel,player,enemys,bullets,meteors);
         player.setPosition(0,(stageHeight-player.getHeight())/2);
