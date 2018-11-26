@@ -34,7 +34,7 @@ public class ImageLoader {
      * loads all the images
      */
     private void initializeImages() {
-        double size = 1.0*Settings.width/1080;
+        double size = 1.0*Settings.height/720;
         //load Background
         backgroundImage = new Image("Images/Background/background.jpg", Settings.width,Settings.width,true,false);
         //load shields

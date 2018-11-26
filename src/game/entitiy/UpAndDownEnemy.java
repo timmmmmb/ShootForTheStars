@@ -1,5 +1,6 @@
 package game.entitiy;
 
+import game.settings.Settings;
 import javafx.scene.Group;
 
 public class UpAndDownEnemy extends EnemyBasic{
@@ -17,7 +18,7 @@ public class UpAndDownEnemy extends EnemyBasic{
         }else{
             movePosition(-speed/2,speed*2);
         }
-        if(characterModel.intersects(0,-20,2000,20)||characterModel.intersects(0,720,2000,20)){
+        if(characterModel.intersects(0,-20,3000,20)||characterModel.intersects(0, Settings.height,3000,20)){
             moveup=!moveup;
         }
     }
