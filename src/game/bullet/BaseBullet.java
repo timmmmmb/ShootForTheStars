@@ -25,7 +25,6 @@ public class BaseBullet extends ImageView {
     }
 
     public void move(){
-
         if(animateionFrame==deathAnimationImages.size()&&dead){
             remove = true;
         }else if(dead){
@@ -40,7 +39,6 @@ public class BaseBullet extends ImageView {
     public void hit(){
         dead = true;
     }
-
     public boolean isRemove() {
         return remove;
     }

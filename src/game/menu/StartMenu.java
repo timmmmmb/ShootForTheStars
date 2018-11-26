@@ -1,5 +1,6 @@
 package game.menu;
 
+import game.main.Game;
 import game.main.LevelScene;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -13,7 +14,8 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
-import java.io.File;
+import java.net.URISyntaxException;
+import java.util.Objects;
 
 public class StartMenu extends Scene {
     private static StartMenu instance;
@@ -27,12 +29,14 @@ public class StartMenu extends Scene {
     public static StartMenu getInstance(double width, double height, Stage gameStage){
         if(instance==null){
             //start the music
-            /*String musicFile = "Sounds/Music/Music.mp3";
-
-            Media sound = new Media(new File(musicFile).toString());
-            mediaPlayer = new MediaPlayer(sound);
-            mediaPlayer.setAutoPlay(true);
-            mediaPlayer.play();*/
+            try {
+                Media media = new Media(Objects.requireNonNull(Game.class.getClassLoader().getResource("Sounds/Music/Music.mp3")).toURI().toString());
+                mediaPlayer = new MediaPlayer(media);
+                mediaPlayer.setAutoPlay(true);
+                mediaPlayer.play();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
             instance = new StartMenu(createGUI(width, height, gameStage), width, height);
         }
         return instance;
