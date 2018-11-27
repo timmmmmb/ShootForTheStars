@@ -45,7 +45,7 @@ public class DeathScreen extends Scene {
         exitButton.addEventHandler(MouseEvent.MOUSE_EXITED,
                 e -> exitButton.setGraphic(new ImageView(exitImage)));
         exitButton.setOnAction(event -> {
-            gameStage.setScene(StartMenu.getInstance(width, height, gameStage));
+            gameStage.setScene(StartMenu.getInstance());
             System.out.println(gameStage.getScene());
         });
         Image playImage = new Image("Images/Menu Screen/play_buttons.png",height/5.0,height/5.0,true,false);

@@ -23,14 +23,14 @@ public class StartMenu extends Scene {
     }
 
 
-    public static StartMenu getInstance(double width, double height, Stage gameStage){
+    public static StartMenu getInstance(){
         if(instance==null){
             //start the music
             mediaPlayer = new MediaPlayer(SoundLoader.getInstance().getMusic1());
             mediaPlayer.setAutoPlay(true);
             mediaPlayer.setVolume(Settings.musicVolume);
             mediaPlayer.play();
-            instance = new StartMenu(createGUI(width, height, gameStage), width, height);
+            instance = new StartMenu(createGUI(Settings.width, Settings.height, Settings.stage), Settings.width, Settings.height);
         }
         return instance;
     }

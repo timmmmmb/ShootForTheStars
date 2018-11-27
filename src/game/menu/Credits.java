@@ -39,7 +39,7 @@ class Credits extends Scene {
                 e -> exitButton.setGraphic(new ImageView(exitImageOnHover)));
         exitButton.addEventHandler(MouseEvent.MOUSE_EXITED,
                 e -> exitButton.setGraphic(new ImageView(exitImage)));
-        exitButton.setOnAction(event -> gameStage.setScene(StartMenu.getInstance(width, height, gameStage)));
+        exitButton.setOnAction(event -> gameStage.setScene(StartMenu.getInstance()));
         exitButton.setStyle(menuStyle);
         root.setStyle(menuStyle);
         root.getChildren().addAll(credits,exitButton);

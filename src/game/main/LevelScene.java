@@ -4,6 +4,8 @@ import game.bullet.BaseBullet;
 import game.entitiy.*;
 import game.image.ImageLoader;
 import game.menu.DeathScreen;
+import game.menu.GameMenu;
+import game.settings.Settings;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -234,7 +236,7 @@ public class LevelScene extends Scene {
         if(instance==null){
             gameStage = stage;
             stageWidth = width;
-            stageHeight = height;instance = new LevelScene(createGUI(stageWidth, stageHeight), stageWidth, stageHeight);
+            stageHeight = height;instance = new LevelScene(root, stageWidth, stageHeight);
             instance.setOnKeyPressed(event -> {
                 switch (event.getCode()) {
                     case UP: case W:   player.setUp(true);break;
@@ -243,6 +245,8 @@ public class LevelScene extends Scene {
                     case RIGHT: case D: player.setRight(true); break;
                     case R: restartLevel(); break;
                     case SPACE:  player.setShooting(true); break;
+                    case ESCAPE: GameMenu.getInsctance(animationTimer).setVisible(true); animationTimer.stop();break;
+
                 }
             });
             instance.setOnKeyReleased(event -> {
@@ -260,16 +264,18 @@ public class LevelScene extends Scene {
 
     }
 
-    private static Group createGUI(double width, double height) {
+    private static void createGUI() {
         ImageView backgroundImageView = new ImageView(ImageLoader.getInstance().getBackgroundImage());
         root.setStyle(menuStyle);
-        root.getChildren().addAll(backgroundImageView,scoreLabel,player,enemys,bullets,meteors);
+        root.getChildren().clear();
+        root.getChildren().addAll(backgroundImageView,scoreLabel,player,enemys,bullets,meteors,GameMenu.getInsctance(animationTimer));
         player.setPosition(0,(stageHeight-player.getHeight())/2);
+        root.setStyle(Settings.menuStyle);
         spawn();
-        return root;
     }
 
     public static void restartLevel(){
+        animationTimer.stop();
         enemys = new Group();
         bullets = new Group();
         player = new Player();
@@ -278,9 +284,10 @@ public class LevelScene extends Scene {
         scoreLabel = new Label("Score: "+score);
         timer = 0;
         difficulty = 1;
-        createGUI(stageWidth,stageHeight);
+        createGUI();
         animationTimer.start();
     }
+
 
     private static void spawn(){
         if(!spawnEnemys)return;

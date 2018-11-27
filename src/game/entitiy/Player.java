@@ -1,6 +1,7 @@
 package game.entitiy;
 
 import game.image.ImageLoader;
+import game.settings.Settings;
 
 public class Player extends Entity {
     private boolean up = false;
@@ -32,14 +33,14 @@ public class Player extends Entity {
         if(getCharacterModel().getX()<0){
             getCharacterModel().setX(0);
         }
-        if(getCharacterModel().getX()+getWidth()>=getScene().getWidth()){
-            getCharacterModel().setX(getScene().getWidth()-getWidth());
+        if(getCharacterModel().getX()+getWidth()>= Settings.width){
+            getCharacterModel().setX(Settings.width-getWidth());
         }
         if(getCharacterModel().getY()<0){
             getCharacterModel().setY(0);
         }
-        if(getCharacterModel().getY()+getHeight()>=getScene().getHeight()){
-            getCharacterModel().setY(getScene().getHeight()-getHeight());
+        if(getCharacterModel().getY()+getHeight()>=Settings.height){
+            getCharacterModel().setY(Settings.height-getHeight());
         }
         shieldView.setX(getCharacterModel().getX());
         shieldView.setY(getCharacterModel().getY());

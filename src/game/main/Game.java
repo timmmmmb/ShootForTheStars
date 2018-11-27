@@ -14,7 +14,8 @@ public class Game extends Application {
 
     @Override
     public void start(Stage gameStage) {
-        gameStage.setScene(StartMenu.getInstance(Settings.width,Settings.height, gameStage));
+        Settings.stage = gameStage;
+        gameStage.setScene(StartMenu.getInstance());
         SoundLoader.getInstance();
         ImageLoader.getInstance();
         gameStage.show();

@@ -28,7 +28,7 @@ public class EnemyBasic extends Entity {
         speed = 2;
     }
 
-    public EnemyBasic(Group bullets, ArrayList<Image> animation) {
+    EnemyBasic(Group bullets, ArrayList<Image> animation) {
         super(  animation,
                 ImageLoader.getInstance().getExplosionImages(),
                 ImageLoader.getInstance().getBulletRed(),
@@ -39,7 +39,7 @@ public class EnemyBasic extends Entity {
         speed = 2;
     }
 
-    public EnemyBasic(Group bullets, ArrayList<Image> animationImages, ArrayList<Image> deathAnimationImages, Image bulletImage, ArrayList<Image> bulletEffect, Image shieldImage) {
+    EnemyBasic(Group bullets, ArrayList<Image> animationImages, ArrayList<Image> deathAnimationImages, Image bulletImage, ArrayList<Image> bulletEffect, Image shieldImage) {
         super(  animationImages,
                 deathAnimationImages,
                 bulletImage,
