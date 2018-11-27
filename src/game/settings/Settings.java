@@ -5,5 +5,4 @@ public class Settings {
     public static double height = 1080;
     public static double musicVolume = 50;
     public static double effectVolume = 50;
-
 }

@@ -1,6 +1,8 @@
 package game.entitiy;
 
 import game.bullet.BaseBullet;
+import game.settings.Settings;
+import game.sound.SoundLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -97,6 +99,7 @@ public class Entity extends Group {
 
     public void shoot(){
         bullets.getChildren().add(new BaseBullet(characterModel.getX()+characterModel.getImage().getWidth(),characterModel.getY()+(characterModel.getImage().getHeight()/2),bulletspeed,0,bulletImage,rotation,bulletEffect));
+        SoundLoader.getInstance().getShooteEffect().play(Settings.effectVolume);
     }
 
     void moveBullets(){

@@ -2,6 +2,8 @@ package game.entitiy;
 
 import game.bullet.BaseBullet;
 import game.image.ImageLoader;
+import game.settings.Settings;
+import game.sound.SoundLoader;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 
@@ -68,6 +70,7 @@ public class EnemyBasic extends Entity {
     @Override
     public void shoot(){
         bulletsScene.getChildren().add(new BaseBullet(characterModel.getX(),characterModel.getY()+(characterModel.getImage().getHeight()/2),-bulletspeed,0,bulletImage,rotation,bulletEffect));
+        SoundLoader.getInstance().getShooteEffect().play(Settings.effectVolume);
     }
 
     public int getPoints() {
