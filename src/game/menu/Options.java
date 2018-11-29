@@ -1,12 +1,10 @@
 package game.menu;
 
 import game.buttons.ExitButton;
+import game.main.Game;
 import game.settings.Settings;
 import javafx.geometry.Pos;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -33,7 +31,10 @@ class Options extends VBox {
         resolution.getSelectionModel().select(Settings.resolution);
         resolution.valueProperty().addListener((ov, t, newResolution) -> Settings.changeResolution(newResolution));
         CheckBox fullscreen = new CheckBox("Fullscreen");
+        fullscreen.setSelected(Settings.fullscreen);
         fullscreen.selectedProperty().addListener((ov, old_val, new_val) -> Settings.fullscreen = new_val);
+        Button restart = new Button("Save Settings");
+        restart.setOnAction(event -> Game.restartApplication());
         HBox resolutionBox = new HBox(resolutionLabel,resolution,fullscreen);
         resolutionBox.setAlignment(Pos.CENTER);
         resolutionBox.setSpacing(10);
@@ -69,8 +70,11 @@ class Options extends VBox {
         HBox musicBox = new HBox(musicLabel,musicSlider);
         musicBox.setAlignment(Pos.CENTER);
         ExitButton exitButton = new ExitButton();
-        exitButton.setOnAction(event -> Settings.changeRoot(StartMenu.getInstance()));
+        exitButton.setOnAction(event -> {
+            Settings.changeRoot(StartMenu.getInstance());
+            Settings.writeSettings();
+        });
         instance.setStyle(Settings.menuStyle);
-        instance.getChildren().addAll(resolutionBox,soundBox,musicBox,exitButton);
+        instance.getChildren().addAll(resolutionBox,restart,soundBox,musicBox,exitButton);
     }
 }

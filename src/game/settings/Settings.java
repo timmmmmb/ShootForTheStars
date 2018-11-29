@@ -6,6 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Scanner;
+
 public class Settings {
     public static Stage stage = null;
     private static final String resolution1920 = "1920x1080p";
@@ -35,10 +41,45 @@ public class Settings {
      * loads all the settings from a .ini file
      */
     public static void loadSettings(){
+        try (Scanner scanner = new Scanner(new File("settings.txt"))) {
+            while (scanner.hasNext()){
+                String line = scanner.next();
+                if(line.contains("resolution")){
+                    changeResolution(line.substring(line.indexOf("=")+1));
+                }else if(line.contains("musicVolume")){
+                    musicVolume = Double.parseDouble(line.substring(line.indexOf("=")+1));
+                }else if(line.contains("soundVolume")){
+                    effectVolume = Double.parseDouble(line.substring(line.indexOf("=")+1));
+                }else if(line.contains("fullscreen")){
+                    fullscreen = Boolean.parseBoolean(line.substring(line.indexOf("=")+1));
+                }else if(line.contains("highscore")){
+                    highscore = Integer.parseInt(line.substring(line.indexOf("=")+1));
+                }
+            }
 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeSettings(){
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter("settings.txt", "UTF-8");
+            writer.println("resolution="+resolution);
+            writer.println("musicVolume="+musicVolume);
+            writer.println("soundVolume="+effectVolume);
+            writer.println("fullscreen="+fullscreen);
+            writer.println("highscore="+highscore);
+            writer.flush();
+            writer.close();
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void changeResolution(String newResolution){
+        if(!newResolution.contains("x")||!newResolution.contains("p"))return;
         Settings.resolution = newResolution;
         Settings.width = Double.parseDouble(newResolution.substring(0,newResolution.indexOf("x")));
         Settings.height = Double.parseDouble(newResolution.substring(newResolution.indexOf("x")+1,newResolution.indexOf("p")));
