@@ -16,7 +16,7 @@ public class PlayButton extends Button {
                 e -> this.setGraphic(new ImageView(playImageOnHover)));
         this.addEventHandler(MouseEvent.MOUSE_EXITED,
                 e -> this.setGraphic(new ImageView(playImage)));
-        this.setStyle(Settings.menuStyle);
+        this.setStyle(Settings.menuStyleTransparent);
         this.setHeight(playImage.getHeight());
         this.setWidth(playImage.getWidth());
     }

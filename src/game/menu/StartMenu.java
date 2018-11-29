@@ -1,25 +1,23 @@
 package game.menu;
 
+import game.buttons.CreditsButton;
+import game.buttons.ExitButton;
+import game.buttons.OptionsButton;
+import game.buttons.PlayButton;
+import game.image.ImageLoader;
 import game.main.LevelScene;
 import game.settings.Settings;
 import game.sound.SoundLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
 
-public class StartMenu extends Scene {
+public class StartMenu extends VBox {
     private static StartMenu instance;
     private static MediaPlayer mediaPlayer;
-    private static final String menuStyle = "-fx-border-color: #000000; -fx-border-width: 5px;-fx-background-color:#000000;";
-    private StartMenu(Parent root, double width, double height) {
-        super(root, width, height);
+    private StartMenu() {
+        super();
     }
 
 
@@ -30,58 +28,29 @@ public class StartMenu extends Scene {
             mediaPlayer.setAutoPlay(true);
             mediaPlayer.setVolume(Settings.musicVolume);
             mediaPlayer.play();
-            instance = new StartMenu(createGUI(Settings.width, Settings.height, Settings.stage), Settings.width, Settings.height);
+            instance = new StartMenu();
+            createGUI();
         }
         return instance;
     }
 
-    private static VBox createGUI(double width, double height, Stage gameStage){
-        VBox root = new VBox();
-        root.setAlignment(Pos.CENTER);
-        Image titleImage = new Image("Images/Menu Screen/top_banner.jpg",height/2.5,height/2.5,true,false);
-        ImageView titleImageView = new ImageView(titleImage);
-        Image playImage = new Image("Images/Menu Screen/play_buttons.png",height/5.0,height/5.0,true,false);
-        Image playImageOnHover = new Image("Images/Menu Screen/play_buttons_pressed_blue.png",height/5.0,height/5.0,true,false);
-        Button playButton = new Button("", new ImageView(playImage));
-        Image optionsImageOnHover = new Image("Images/Menu Screen/optionst_buttons_pressed.png",height/5.0,height/5.0,true,false);
-        Image optionsImage = new Image("Images/Menu Screen/optionst_buttons.png", height/5.0,height/5.0,true,false);
-        Button optionsButton = new Button("", new ImageView(optionsImage));
-        Image creditsImageOnHover = new Image("Images/Menu Screen/Creditst_buttons_pressed.png",height/5.0,height/5.0,true,false);
-        Image creditsImage = new Image("Images/Menu Screen/Creditst_buttons.png", height/5.0,height/5.0,true,false);
-        Button creditsButton = new Button("", new ImageView(creditsImage));
-        Image exitImageOnHover = new Image("Images/Menu Screen/exit_buttons_pressed.png",height/5.0,height/5.0,true,false);
-        Image exitImage = new Image("Images/Menu Screen/exit_buttons.png", height/5.0,height/5.0,true,false);
-        Button exitButton = new Button("", new ImageView(exitImage));
-        playButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                e -> playButton.setGraphic(new ImageView(playImageOnHover)));
-        playButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-                e -> playButton.setGraphic(new ImageView(playImage)));
+    private static void createGUI(){
+        instance.setMinSize(Settings.width,Settings.height);
+        instance.setAlignment(Pos.CENTER);
+        ImageView titleImageView = new ImageView(ImageLoader.getInstance().getTitleImage());
+        PlayButton playButton = new PlayButton();
+        CreditsButton creditsButton = new CreditsButton();
+        OptionsButton optionsButton = new OptionsButton();
+        ExitButton exitButton = new ExitButton();
         playButton.setOnAction(event -> {
-            gameStage.setScene(LevelScene.getInstance(width, height, gameStage));
+            Settings.changeRoot(LevelScene.getInstance());
             LevelScene.restartLevel();
         });
-        playButton.setStyle(menuStyle);
-        optionsButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                e -> optionsButton.setGraphic(new ImageView(optionsImageOnHover)));
-        optionsButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-                e -> optionsButton.setGraphic(new ImageView(optionsImage)));
-        optionsButton.setOnAction(event -> gameStage.setScene(Options.getInstance(width, height, gameStage)));
-        optionsButton.setStyle(menuStyle);
-        creditsButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                e -> creditsButton.setGraphic(new ImageView(creditsImageOnHover)));
-        creditsButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-                e -> creditsButton.setGraphic(new ImageView(creditsImage)));
-        creditsButton.setOnAction(event -> gameStage.setScene(Credits.getInstance(width, height, gameStage)));
-        creditsButton.setStyle(menuStyle);
-        exitButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                e -> exitButton.setGraphic(new ImageView(exitImageOnHover)));
-        exitButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-                e -> exitButton.setGraphic(new ImageView(exitImage)));
+        optionsButton.setOnAction(event -> Settings.changeRoot(Options.getInstance()));
+        creditsButton.setOnAction(event -> Settings.changeRoot(Credits.getInstance()));
         exitButton.setOnAction(event -> System.exit(0));
-        exitButton.setStyle(menuStyle);
-        root.setStyle(menuStyle);
-        root.getChildren().addAll(titleImageView,playButton,optionsButton,creditsButton,exitButton);
-        return root;
+        instance.getChildren().addAll(titleImageView,playButton,optionsButton,creditsButton,exitButton);
+        instance.setStyle(Settings.menuStyle);
     }
 
     public void setVolume(double volume){

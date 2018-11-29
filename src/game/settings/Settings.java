@@ -1,5 +1,8 @@
 package game.settings;
 
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Settings {
@@ -8,5 +11,13 @@ public class Settings {
     public static double height = 1080;
     public static double musicVolume = 50;
     public static double effectVolume = 50;
-    public static final String menuStyle = "-fx-border-color: transparent; -fx-border-width: 5px;-fx-background-color:transparent;";
+    public static final String menuStyle = "-fx-border-color: #000000; -fx-border-width: 5px;-fx-background-color:#000000;-fx-font-size: 24px;-fx-font-family:Segoe UI;fx-text-fill:#ffffff;";
+    public static final String menuStyleTransparent = "-fx-border-color: transparent; -fx-border-width: 5px;-fx-background-color:transparent;";
+    public static boolean fullscreen = true;
+    public static AnchorPane root = new AnchorPane();
+
+    public static void changeRoot(Parent parent){
+        root.getChildren().clear();
+        root.getChildren().add(parent);
+    }
 }

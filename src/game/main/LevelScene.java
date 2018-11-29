@@ -9,20 +9,15 @@ import game.settings.Settings;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-public class LevelScene extends Scene {
-
-    private static Group root = new Group();
+public class LevelScene extends Group {
     private static Group meteors = new Group();
     private static Group enemys = new Group();
     private static Group bullets = new Group();
@@ -32,11 +27,8 @@ public class LevelScene extends Scene {
     private static int difficulty = 1;
     private static int score = 0;
     private static Label scoreLabel = new Label("Score: "+score);
-    private static double stageWidth;
-    private static double stageHeight;
     private static boolean spawnMeteors = false;
     private static boolean spawnEnemys = true;
-    //TODO: make it possible to pause the game when pressing esc and opening a mid game menu
     private static AnimationTimer animationTimer = new AnimationTimer() {
         @Override
         public void handle(long now) {
@@ -115,7 +107,7 @@ public class LevelScene extends Scene {
                 }
 
                 //if bullet out of screen
-                if (!bullet.intersects(-100, -100, stageWidth + stageWidth, stageHeight + 100)) {
+                if (!bullet.intersects(-100, -100, Settings.width + Settings.width, Settings.height + 100)) {
                     bulletIterator.remove();
                 }
 
@@ -141,7 +133,7 @@ public class LevelScene extends Scene {
                     continue;
                 }
                 //if enemy out of screen
-                if (!enemy.intersects(-100, -100, stageWidth + stageWidth, stageHeight + 100)) {
+                if (!enemy.intersects(-100, -100, Settings.width + Settings.width, Settings.height + 100)) {
                     enemyIterator.remove();
                 }
 
@@ -169,7 +161,7 @@ public class LevelScene extends Scene {
                     continue;
                 }
                 //if meteor out of screen
-                if (!meteor.intersects(-100, -100, stageWidth + stageWidth, stageHeight + 100)) {
+                if (!meteor.intersects(-100, -100, Settings.width + Settings.width, Settings.height + 100)) {
                     meteorIterator.remove();
                 }
             }
@@ -185,7 +177,7 @@ public class LevelScene extends Scene {
                     continue;
                 }
                 //if bullet out of screen
-                if(!bullet.intersects(-100,-100,stageWidth+100,stageHeight+100)){
+                if(!bullet.intersects(-100,-100,Settings.width+100,Settings.height+100)){
                     bulletIterator.remove();
                     continue;
                 }
@@ -206,12 +198,11 @@ public class LevelScene extends Scene {
             if(player.isRemove()){
                 animationTimer.stop();
                 //gameover change scene to gameOverScene
-                DeathScreen.getInstance(stageWidth,stageHeight,gameStage).setScore(score);
-                gameStage.setScene(DeathScreen.getInstance(stageWidth,stageHeight,gameStage));
+                DeathScreen.getInstance().setScore(score);
+                Settings.changeRoot(DeathScreen.getInstance());
             }
         }
     };
-    private static Stage gameStage;
     private static final String menuStyle = "-fx-border-color: #000000; -fx-border-width: 5px;-fx-background-color:#000000;-fx-font-size: 24px;-fx-font-family:Segoe UI;fx-text-fill:#ffffff;";
     private static LevelScene instance;
 
@@ -227,16 +218,14 @@ public class LevelScene extends Scene {
         scoreLabel.setText("Score: "+score);
     }
 
-    private LevelScene(Parent root, double width, double height) {
-        super(root, width, height);
+    private LevelScene() {
+        super();
     }
 
 
-    public static LevelScene getInstance( double width, double height,Stage stage){
+    public static LevelScene getInstance(){
         if(instance==null){
-            gameStage = stage;
-            stageWidth = width;
-            stageHeight = height;instance = new LevelScene(root, stageWidth, stageHeight);
+            instance = new LevelScene();
             instance.setOnKeyPressed(event -> {
                 switch (event.getCode()) {
                     case UP: case W:   player.setUp(true);break;
@@ -258,6 +247,8 @@ public class LevelScene extends Scene {
                     case SPACE:  player.setShooting(false); break;
                 }
             });
+            Settings.stage.getScene().onKeyPressedProperty().bind(instance.onKeyPressedProperty());
+            Settings.stage.getScene().onKeyReleasedProperty().bind(instance.onKeyReleasedProperty());
             animationTimer.start();
         }
         return instance;
@@ -266,11 +257,11 @@ public class LevelScene extends Scene {
 
     private static void createGUI() {
         ImageView backgroundImageView = new ImageView(ImageLoader.getInstance().getBackgroundImage());
-        root.setStyle(menuStyle);
-        root.getChildren().clear();
-        root.getChildren().addAll(backgroundImageView,scoreLabel,player,enemys,bullets,meteors,GameMenu.getInsctance(animationTimer));
-        player.setPosition(0,(stageHeight-player.getHeight())/2);
-        root.setStyle(Settings.menuStyle);
+        instance.setStyle(menuStyle);
+        instance.getChildren().clear();
+        instance.getChildren().addAll(backgroundImageView,scoreLabel,player,enemys,bullets,meteors,GameMenu.getInsctance(animationTimer));
+        player.setPosition(0,(Settings.height-player.getHeight())/2);
+        instance.setStyle(Settings.menuStyle);
         spawn();
     }
 
@@ -294,25 +285,25 @@ public class LevelScene extends Scene {
         //randomize the enemy and his startpos
         Random rng = new Random();
         int enemytype = rng.nextInt(4);
-        int y = rng.nextInt((int)stageHeight-100)+1;
+        int y = rng.nextInt((int)Settings.height-100)+1;
         //enemytype = 3;
         if(enemytype==0){
             UpAndDownEnemy enemy = new UpAndDownEnemy(bullets);
-            enemy.setPosition(stageWidth,y);
+            enemy.setPosition(Settings.width,y);
             enemys.getChildren().add(enemy);
         }
         if(enemytype==1){
             EnemyBasic enemy = new EnemyBasic(bullets);
-            enemy.setPosition(stageWidth,y);
+            enemy.setPosition(Settings.width,y);
             enemys.getChildren().add(enemy);
         }
         if(enemytype==2){
-            TargetEnemy enemy = new TargetEnemy(bullets,stageWidth,y);
+            TargetEnemy enemy = new TargetEnemy(bullets,Settings.width,y);
             enemys.getChildren().add(enemy);
         }
         if(enemytype==3){
             FollowEnemy enemy = new FollowEnemy(bullets, player);
-            enemy.setPosition(stageWidth,y);
+            enemy.setPosition(Settings.width,y);
             enemys.getChildren().add(enemy);
         }
     }
@@ -320,30 +311,30 @@ public class LevelScene extends Scene {
     private static void spawnThreeUpAndDown(){
         if(!spawnEnemys)return;
         UpAndDownEnemy enemy = new UpAndDownEnemy(bullets);
-        enemy.setPosition(stageWidth,1);
+        enemy.setPosition(Settings.width,1);
         enemys.getChildren().add(enemy);
 
         enemy = new UpAndDownEnemy(bullets);
-        enemy.setPosition(stageWidth+enemy.getWidth(),200);
+        enemy.setPosition(Settings.width+enemy.getWidth(),200);
         enemys.getChildren().add(enemy);
 
         enemy = new UpAndDownEnemy(bullets);
-        enemy.setPosition(stageWidth+enemy.getWidth()*2,400);
+        enemy.setPosition(Settings.width+enemy.getWidth()*2,400);
         enemys.getChildren().add(enemy);
     }
 
     private static void spawnMeteor(){
         Random rng = new Random();
         int meteor = rng.nextInt(4);
-        int y = rng.nextInt((int)stageHeight-100)+1;
+        int y = rng.nextInt((int)Settings.height-100)+1;
         ArrayList<Image> meteorimage = new ArrayList<>();
         meteorimage.add(ImageLoader.getInstance().getMeteors().get(meteor));
-        meteors.getChildren().add(new Meteor(stageWidth,y, meteorimage));
+        meteors.getChildren().add(new Meteor(Settings.width,y, meteorimage));
     }
 
     private static void spawnMotherShip(){
         MotherShip motherShip = new MotherShip(bullets);
-        motherShip.setPosition(stageWidth,stageHeight/2-motherShip.getHeight()/2);
+        motherShip.setPosition(Settings.width,Settings.height/2-motherShip.getHeight()/2);
         enemys.getChildren().add(motherShip);
 
         SmallShip smallShip = new SmallShip(bullets,motherShip);
@@ -370,7 +361,7 @@ public class LevelScene extends Scene {
 
     private static void spawnSmallShip(){
         SmallShip enemy = new SmallShip(bullets);
-        enemy.setPosition(stageWidth,stageHeight/2);
+        enemy.setPosition(Settings.width,Settings.height/2);
         enemys.getChildren().add(enemy);
     }
 }

@@ -15,7 +15,7 @@ public class OptionsButton extends Button {
                 e -> this.setGraphic(new ImageView(exitImageOnHover)));
         this.addEventHandler(MouseEvent.MOUSE_EXITED,
                 e -> this.setGraphic(new ImageView(exitImage)));
-        this.setStyle(Settings.menuStyle);
+        this.setStyle(Settings.menuStyleTransparent);
         this.setHeight(exitImage.getHeight());
         this.setWidth(exitImage.getWidth());
     }

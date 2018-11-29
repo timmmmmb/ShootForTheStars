@@ -1,48 +1,36 @@
 package game.menu;
 
+import game.buttons.ExitButton;
+import game.settings.Settings;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-class Credits extends Scene {
+class Credits extends VBox {
 
-    private static final String menuStyle = "-fx-border-color: #000000; -fx-border-width: 5px;-fx-background-color:#000000;-fx-font-size: 24px;-fx-font-family:Segoe UI;fx-text-fill:#ffffff;";
     private static Credits instance;
-    private Credits(Parent root, double width, double height) {
-        super(root, width, height);
+    private Credits() {
+        super();
     }
 
 
-    static Credits getInstance(double width, double height, Stage gameStage){
+    static Credits getInstance(){
         if(instance==null){
-            instance = new Credits(createGUI(width, height, gameStage), width, height);
+            instance = new Credits();
+            createGUI();
         }
         return instance;
     }
 
-    private static VBox createGUI(double width, double height, Stage gameStage) {
-        VBox root = new VBox();
-        root.setAlignment(Pos.CENTER);
+    private static VBox createGUI() {
+        instance.setMinSize(Settings.width,Settings.height);
+        instance.setAlignment(Pos.CENTER);
         Label credits = new Label("Programmer: Frey Tim\nGame Design: Frey Tim\nGraphics: Unlucky Studios");
-        credits.setStyle(menuStyle);
-        Image exitImageOnHover = new Image("Images/Menu Screen/exit_buttons_pressed.png",height/5.0,height/5.0,true,false);
-        Image exitImage = new Image("Images/Menu Screen/exit_buttons.png", height/5.0,height/5.0,true,false);
-        Button exitButton = new Button("", new ImageView(exitImage));
-        exitButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                e -> exitButton.setGraphic(new ImageView(exitImageOnHover)));
-        exitButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-                e -> exitButton.setGraphic(new ImageView(exitImage)));
-        exitButton.setOnAction(event -> gameStage.setScene(StartMenu.getInstance()));
-        exitButton.setStyle(menuStyle);
-        root.setStyle(menuStyle);
-        root.getChildren().addAll(credits,exitButton);
-        return root;
+        credits.setStyle(Settings.menuStyle);
+        ExitButton exitButton = new ExitButton();
+        exitButton.setOnAction(event ->  Settings.changeRoot(StartMenu.getInstance()));
+        instance.setStyle(Settings.menuStyle);
+        instance.getChildren().addAll(credits,exitButton);
+        return instance;
     }
 }

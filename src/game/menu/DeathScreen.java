@@ -1,19 +1,15 @@
 package game.menu;
 
+import game.buttons.ExitButton;
+import game.buttons.PlayButton;
 import game.main.LevelScene;
+import game.settings.Settings;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-public class DeathScreen extends Scene {
+public class DeathScreen extends VBox {
 
     private static DeathScreen instance;
 
@@ -23,49 +19,36 @@ public class DeathScreen extends Scene {
     private static Label scoreLabel = new Label("your Score: "+score);
     private static Label highscoreLabel = new Label("your Highscore: "+highscore);
     private static final String menuStyle = "-fx-border-color: #000000; -fx-border-width: 5px;-fx-background-color:#000000;-fx-font-size: 24px;-fx-font-family:Segoe UI;fx-text-fill:#ffffff;";
-    private DeathScreen(Parent root, double width, double height) {
-        super(root, width, height);
+    private DeathScreen() {
+        super();
     }
 
-    public static DeathScreen getInstance(double width, double height, Stage gameStage){
+    public static DeathScreen getInstance(){
         if(instance==null){
-            instance = new DeathScreen(createGUI(width, height, gameStage), width, height);
+            instance = new DeathScreen();
+            createGUI();
         }
         return instance;
     }
 
-    private static VBox createGUI(double width, double height, Stage gameStage) {
-        VBox root = new VBox();
-        root.setAlignment(Pos.CENTER);
-        Image exitImageOnHover = new Image("Images/Menu Screen/exit_buttons_pressed.png",height/5.0,height/5.0,true,false);
-        Image exitImage = new Image("Images/Menu Screen/exit_buttons.png", height/5.0,height/5.0,true,false);
-        Button exitButton = new Button("", new ImageView(exitImage));
-        exitButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                e -> exitButton.setGraphic(new ImageView(exitImageOnHover)));
-        exitButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-                e -> exitButton.setGraphic(new ImageView(exitImage)));
-        exitButton.setOnAction(event -> {
-            gameStage.setScene(StartMenu.getInstance());
-            System.out.println(gameStage.getScene());
-        });
-        Image playImage = new Image("Images/Menu Screen/play_buttons.png",height/5.0,height/5.0,true,false);
-        Image playImageOnHover = new Image("Images/Menu Screen/play_buttons_pressed_blue.png",height/5.0,height/5.0,true,false);
-        Button playButton = new Button("", new ImageView(playImage));
-        playButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                e -> playButton.setGraphic(new ImageView(playImageOnHover)));
-        playButton.addEventHandler(MouseEvent.MOUSE_EXITED,
-                e -> playButton.setGraphic(new ImageView(playImage)));
+    private static void createGUI() {
+        instance.setMinSize(Settings.width,Settings.height);
+        instance.setAlignment(Pos.CENTER);
+        ExitButton exitButton = new ExitButton();
+        exitButton.setOnAction(event ->
+                Settings.changeRoot(StartMenu.getInstance())
+        );
+        PlayButton playButton = new PlayButton();
         playButton.setOnAction(event -> {
-            gameStage.setScene(LevelScene.getInstance(width, height, gameStage));
+            Settings.changeRoot(LevelScene.getInstance());
             LevelScene.restartLevel();
         });
         HBox buttons = new HBox(playButton,exitButton);
         buttons.setAlignment(Pos.CENTER);
         playButton.setStyle(menuStyle);
         exitButton.setStyle(menuStyle);
-        root.setStyle(menuStyle);
-        root.getChildren().addAll(diedLabel,scoreLabel,highscoreLabel,buttons);
-        return root;
+        instance.setStyle(menuStyle);
+        instance.getChildren().addAll(diedLabel,scoreLabel,highscoreLabel,buttons);
     }
 
     public void setScore(int score){

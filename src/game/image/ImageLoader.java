@@ -25,6 +25,7 @@ public class ImageLoader {
     private ArrayList<Image> bulletRedEffect = new ArrayList<>();
     private ArrayList<Image> meteors = new ArrayList<>();
     private Image motherShipBullet;
+    private Image titleImage;
 
     private ImageLoader(){
         initializeImages();
@@ -35,6 +36,9 @@ public class ImageLoader {
      */
     private void initializeImages() {
         double size = 1.0*Settings.height/720;
+        //menu elements
+        titleImage = new Image("Images/Menu Screen/top_banner.jpg",Settings.height/2.5,Settings.height/2.5,true,false);
+
         //load Background
         backgroundImage = new Image("Images/Background/background.jpg", Settings.width,Settings.width,true,false);
         //load shields
@@ -139,5 +143,9 @@ public class ImageLoader {
 
     public Image getBackgroundImage() {
         return backgroundImage;
+    }
+
+    public Image getTitleImage() {
+        return titleImage;
     }
 }

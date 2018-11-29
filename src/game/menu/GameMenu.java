@@ -20,11 +20,11 @@ public class GameMenu extends VBox {
         this.getChildren().add(play);
         ExitButton exit = new ExitButton();
         exit.setOnAction(event -> {
-                    Settings.stage.setScene(StartMenu.getInstance());
+                    Settings.changeRoot(StartMenu.getInstance());
                     this.setVisible(false);
                 });
         this.getChildren().add(exit);
-        this.setStyle(Settings.menuStyle);
+        this.setStyle(Settings.menuStyleTransparent);
         this.setHeight(exit.getHeight()+play.getHeight());
         this.setWidth(exit.getWidth());
         this.setLayoutX((Settings.width-this.getWidth())/2);
