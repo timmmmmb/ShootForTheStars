@@ -26,7 +26,7 @@ public class StartMenu extends VBox {
             //start the music
             mediaPlayer = new MediaPlayer(SoundLoader.getInstance().getMusic1());
             mediaPlayer.setAutoPlay(true);
-            mediaPlayer.setVolume(Settings.musicVolume);
+            mediaPlayer.setVolume(Settings.musicVolume/100);
             mediaPlayer.play();
             instance = new StartMenu();
             createGUI();
@@ -53,7 +53,7 @@ public class StartMenu extends VBox {
         instance.setStyle(Settings.menuStyle);
     }
 
-    public void setVolume(double volume){
-        mediaPlayer.setVolume(volume);
+    void setVolume(double volume){
+        mediaPlayer.setVolume(volume/100);
     }
 }
