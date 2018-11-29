@@ -14,10 +14,9 @@ public class DeathScreen extends VBox {
     private static DeathScreen instance;
 
     private static int score = 0;
-    private static int highscore = 0;
     private static  Label diedLabel = new Label("You died");
     private static Label scoreLabel = new Label("your Score: "+score);
-    private static Label highscoreLabel = new Label("your Highscore: "+highscore);
+    private static Label highscoreLabel = new Label("your Highscore: "+Settings.highscore);
     private static final String menuStyle = "-fx-border-color: #000000; -fx-border-width: 5px;-fx-background-color:#000000;-fx-font-size: 24px;-fx-font-family:Segoe UI;fx-text-fill:#ffffff;";
     private DeathScreen() {
         super();
@@ -53,10 +52,10 @@ public class DeathScreen extends VBox {
 
     public void setScore(int score){
         DeathScreen.score = score;
-        if(score > highscore){
-            highscore = score;
+        if(score > Settings.highscore){
+            Settings.highscore = score;
         }
         scoreLabel.setText("your Score: "+score);
-        highscoreLabel.setText("your Highscore: "+highscore);
+        highscoreLabel.setText("your Highscore: "+Settings.highscore);
     }
 }

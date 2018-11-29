@@ -22,7 +22,7 @@ class Credits extends VBox {
         return instance;
     }
 
-    private static VBox createGUI() {
+    private static void createGUI() {
         instance.setMinSize(Settings.width,Settings.height);
         instance.setAlignment(Pos.CENTER);
         Label credits = new Label("Programmer: Frey Tim\nGame Design: Frey Tim\nGraphics: Unlucky Studios");
@@ -31,6 +31,5 @@ class Credits extends VBox {
         exitButton.setOnAction(event ->  Settings.changeRoot(StartMenu.getInstance()));
         instance.setStyle(Settings.menuStyle);
         instance.getChildren().addAll(credits,exitButton);
-        return instance;
     }
 }
